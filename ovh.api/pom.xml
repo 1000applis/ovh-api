@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.1000applis.ovh</groupId>
+	<artifactId>ovh.api</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>API d'accès à OVH</name>
+
+	<properties>
+  	<jackson-core-version>2.7.1</jackson-core-version>
+  	<jackson-annotations-version>2.7.1</jackson-annotations-version>
+  </properties>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-core</artifactId>
+  		<version>${jackson-core-version}</version>
+  	</dependency>
+	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-annotations</artifactId>
+  		<version>${jackson-annotations-version}</version>
+	</dependency>  
+	<dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-databind</artifactId>
+    	<version>${jackson-core-version}</version>
+  	</dependency>
+  </dependencies>
+  
+</project>
