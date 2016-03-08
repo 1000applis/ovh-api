@@ -1,13 +1,16 @@
 package com.milleapplis.ovh.api.sms;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milleapplis.ovh.api.core.AbstractService;
 import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
+import com.milleapplis.ovh.api.sms.enums.SMSWayTypeEnum;
 import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
+import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.sms.result.SMSSender;
 import com.milleapplis.ovh.api.sms.result.SMSServiceName;
 import com.milleapplis.ovh.api.util.Method;
@@ -57,6 +60,77 @@ public class SMSService extends AbstractService {
 		}
 	}
 
+	
+	public List<String> getSMSServicenameBlacklists(Credential credential, String serviceName) throws OVHApiException {
+		String url = String.format("sms/%s/blacklists", serviceName);
+		String result = executeService(credential, Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, List.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/blacklists", serviceName), e);
+		}
+	}
+
+	public SMSBlacklist getSMSServicenameBlacklistsNumber(Credential credential, String serviceName, String number) throws OVHApiException {
+		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
+		String result = executeService(credential, Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, SMSBlacklist.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/blacklists/%s", serviceName, number), e);
+		}
+	}
+	
+	/**
+	 * Delete blacklist number
+	 * 
+	 * @param credential  credential Clés à utiliser pour l'accès aux comptes
+	 * @param serviceName nom du service pour lequel on souhaite supprimer le sender id
+	 * @param number nomber to remove from blacklist
+	 * 
+	 * @throws OVHApiException  Si une erreur est identifiée.
+	 */
+	public void DeleteSMSServiceNameBlacklistsNumber(Credential credential, String serviceName, String number) throws OVHApiException {
+		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
+		executeService(credential, Method.DELETE, url, "");
+	}
+
+	public Long getSMSServicenameDocument(Credential credential, String serviceName, Date creationDateTimeFrom, Date creationDateTimeTo, String tag, SMSWayTypeEnum wayType) throws OVHApiException {
+		String url = String.format("sms/%s/document", serviceName);
+		String separator = "?";
+		if (creationDateTimeFrom != null) {
+			url += separator + "creationDatetime.from=" + creationDateTimeFrom;
+			separator = "&";
+		}
+		if (creationDateTimeTo != null) {
+			url += separator + "creationDatetime.to=" + creationDateTimeTo;
+			separator = "&";
+		}
+		if (tag != null) {
+			url += separator + "tag=" + tag;
+			separator = "&";
+		}
+		if (wayType != null) {
+			url += separator + "wayType=" + wayType.toString();
+			separator = "&";
+		}
+		String result = executeService(credential, Method.GET, url, "");
+		
+		try {
+			return Long.parseLong(result);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/document", serviceName), e);
+		}
+	}
+	
+	
 	
 	/**
 	 * Service permettant d'envoyer des SMS
