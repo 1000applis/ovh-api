@@ -38,5 +38,8 @@ public class Credential {
 		this.consumerKey = consumerKey;
 	}
 	
+	public String toString() {
+		return String.format("[Application key : %s][Application secret : %s][Consumer key : %s]", applicationKey, applictionSecret, consumerKey);
+	}
 	
 }
