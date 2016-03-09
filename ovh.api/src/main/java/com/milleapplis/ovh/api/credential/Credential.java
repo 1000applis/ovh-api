@@ -1,5 +1,12 @@
 package com.milleapplis.ovh.api.credential;
 
+/**
+ * Class used to store application credentials.
+ * This object must be passed to all services during construction.
+ *  
+ * @author sginer
+ *
+ */
 public class Credential {
 
 	private String applicationKey;
