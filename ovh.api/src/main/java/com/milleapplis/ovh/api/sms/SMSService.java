@@ -11,6 +11,7 @@ import com.milleapplis.ovh.api.sms.enums.SMSWayTypeEnum;
 import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
+import com.milleapplis.ovh.api.sms.result.SMSPttDetails;
 import com.milleapplis.ovh.api.sms.result.SMSSender;
 import com.milleapplis.ovh.api.sms.result.SMSServiceName;
 import com.milleapplis.ovh.api.util.Method;
@@ -23,11 +24,11 @@ public class SMSService extends AbstractService {
 	}
 	
 	/**
-	 * Retourne la liste des comptes SMS associés à ce credential
+	 * Retourne la liste des comptes SMS associï¿½s ï¿½ ce credential
 	 * 
-	 * @param credential Clés à utiliser pour l'accès aux comptes
-	 * @return une liste des comptes SMS associé à ce crendential
-	 * @throws OVHApiException Si une erreur est identifiée.
+	 * @param credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
+	 * @return une liste des comptes SMS associï¿½ ï¿½ ce crendential
+	 * @throws OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public List<String> getSMS() throws OVHApiException {
 		String url = String.format("sms/");
@@ -41,15 +42,29 @@ public class SMSService extends AbstractService {
 			throw new OVHApiException("Impossible d'appeler le service /sms", e);
 		}
 	}
+
+	public SMSPttDetails getSMSPtts(String ptt) throws OVHApiException {
+		String url =String.format("sms/ptts?ptt=%", ptt);
+		String result = executeService(Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, SMSPttDetails.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/ptts.ptt=%s",ptt), e);
+		}
+	}
+	
 	
 	/**
-	 * Retourne les informations associées à un service de SMS (tel aus le nombre de sms restant par exemple).
+	 * Retourne les informations associï¿½es ï¿½ un service de SMS (tel aus le nombre de sms restant par exemple).
 	 * 
-	 * @param credential Clés à utiliser pour l'accès aux comptes
-	 * @param serviceName nom du service pour lequel on souhaite récupérer les informations
+	 * @param credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
+	 * @param serviceName nom du service pour lequel on souhaite rï¿½cupï¿½rer les informations
 	 * @return l'objet OVH contenant les infotmations du service.
 	 * 
-	 * @throws OVHApiException Si une erreur est identifiée.
+	 * @throws OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public SMSServiceName getSMSServiceName(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/", serviceName);
@@ -94,11 +109,11 @@ public class SMSService extends AbstractService {
 	/**
 	 * Delete blacklist number
 	 * 
-	 * @param credential  credential Clés à utiliser pour l'accès aux comptes
+	 * @param credential  credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
 	 * @param serviceName nom du service pour lequel on souhaite supprimer le sender id
 	 * @param number nomber to remove from blacklist
 	 * 
-	 * @throws OVHApiException  Si une erreur est identifiée.
+	 * @throws OVHApiException  Si une erreur est identifiï¿½e.
 	 */
 	public void DeleteSMSServiceNameBlacklistsNumber(String serviceName, String number) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
@@ -139,11 +154,11 @@ public class SMSService extends AbstractService {
 	/**
 	 * Service permettant d'envoyer des SMS
 	 * 
-	 * @param credential  Clés à utiliser pour l'accès aux comptes
+	 * @param credential  Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
 	 * @param serviceName nom du service pour lequel on souhaite envoyer des sms
-	 * @param smsJobParam informations nécessaires à l'envoi des SMS
+	 * @param smsJobParam informations nï¿½cessaires ï¿½ l'envoi des SMS
 	 * @return ???
-	 * @throws OVHApiException Si une erreur est identifiée.
+	 * @throws OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public String postSMSServiceNameJobs(String serviceName, POSTSmsJobParam smsJobParam) throws OVHApiException {
 		String url = String.format("sms/%s/jobs", serviceName);
@@ -159,13 +174,13 @@ public class SMSService extends AbstractService {
 	}
 
 	/**
-	 * Récupère la liste des Sender ID pour un compte SMS
+	 * Rï¿½cupï¿½re la liste des Sender ID pour un compte SMS
 	 * 
-	 * @param credential Clés à utiliser pour l'accès aux comptes
-	 * @param serviceName nom du service pour lequel on souhaite récupérer les sender id
-	 * @return la liste des senders id configurés sur ce compte
+	 * @param credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
+	 * @param serviceName nom du service pour lequel on souhaite rï¿½cupï¿½rer les sender id
+	 * @return la liste des senders id configurï¿½s sur ce compte
 	 * 
-	 * @throws OVHApiException Si une erreur est identifiée.
+	 * @throws OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public List<String> getSMSSenders(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/senders", serviceName);
@@ -184,11 +199,11 @@ public class SMSService extends AbstractService {
 	/**
 	 * Ajoute un sernder id sur un compte
 	 * 
-	 * @param credential Clés à utiliser pour l'accès aux comptes
-	 * @param serviceName nom du service pour lequel on souhaite récupérer les sender id
-	 * @param smsSenders nom du sender id à ajouter au compte (max 11 caractères).
+	 * @param credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
+	 * @param serviceName nom du service pour lequel on souhaite rï¿½cupï¿½rer les sender id
+	 * @param smsSenders nom du sender id ï¿½ ajouter au compte (max 11 caractï¿½res).
 	 * @return
-	 * @throws OVHApiException OVHApiException Si une erreur est identifiée.
+	 * @throws OVHApiException OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public String PostSMSSenders(String serviceName, POSTSmsSendersParam smsSenders) throws OVHApiException {
 		if (smsSenders == null || smsSenders.getSender() == null) {
@@ -213,14 +228,14 @@ public class SMSService extends AbstractService {
 	}
 	
 	/**
-	 * Permet de récupérer les informations sur un sender id
+	 * Permet de rï¿½cupï¿½rer les informations sur un sender id
 	 * 
-	 * @param credential credential Clés à utiliser pour l'accès aux comptes
-	 * @param serviceName nom du service pour lequel on souhaite récupérer les informatins du sender id
+	 * @param credential credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
+	 * @param serviceName nom du service pour lequel on souhaite rï¿½cupï¿½rer les informatins du sender id
 	 * @param sender sender id
 	 * @return les informations du sender id
 	 * 
-	 * @throws OVHApiException Si une erreur est identifiée.
+	 * @throws OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public SMSSender GetSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
@@ -240,13 +255,13 @@ public class SMSService extends AbstractService {
 	/**
 	 * Permet de modifier les informations du sender ID
 	 * 
-	 * @param credential credential Clés à utiliser pour l'accès aux comptes
+	 * @param credential credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
 	 * @param serviceName nom du service pour lequel on souhaite modifier les informatins du sender id
 	 * @param sender sender id
-	 * @param smsSender informations à modifier
+	 * @param smsSender informations ï¿½ modifier
 	 * @return ??
 	 * 
-	 * @throws OVHApiException Si une erreur est identifiée.
+	 * @throws OVHApiException Si une erreur est identifiï¿½e.
 	 */
 	public String PutSMSSenders(String serviceName, String sender, SMSSender smsSender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
@@ -266,11 +281,11 @@ public class SMSService extends AbstractService {
 	/**
 	 * Supprime un sender id
 	 * 
-	 * @param credential  credential Clés à utiliser pour l'accès aux comptes
+	 * @param credential  credential Clï¿½s ï¿½ utiliser pour l'accï¿½s aux comptes
 	 * @param serviceName nom du service pour lequel on souhaite supprimer le sender id
-	 * @param sender sender id à supprimer
+	 * @param sender sender id ï¿½ supprimer
 	 * 
-	 * @throws OVHApiException  Si une erreur est identifiée.
+	 * @throws OVHApiException  Si une erreur est identifiï¿½e.
 	 */
 	public void DeleteSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
@@ -278,7 +293,7 @@ public class SMSService extends AbstractService {
 	}
 
 	/**
-	 * Valide un sender id pas rapport à un code de validation
+	 * Valide un sender id pas rapport ï¿½ un code de validation
 	 * 
 	 */
 	public String PostSMSSendersValidate(String serviceName, String sender, String code) throws OVHApiException {
