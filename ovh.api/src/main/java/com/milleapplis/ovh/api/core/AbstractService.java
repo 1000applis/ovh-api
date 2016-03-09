@@ -16,8 +16,13 @@ public abstract class AbstractService {
 	  
 	protected String serviceUrl;
 
+	protected Credential credential;
 	
-	protected String executeService(Credential credential, Method method, String url, String body) throws OVHApiException {
+	public AbstractService(Credential credential) {
+		this.credential = credential;
+	}
+	
+	protected String executeService(Method method, String url, String body) throws OVHApiException {
 		try {
 			String serviceURLString = baseUrlString + url;
 			URL    serviceURL = new URL(serviceURLString);

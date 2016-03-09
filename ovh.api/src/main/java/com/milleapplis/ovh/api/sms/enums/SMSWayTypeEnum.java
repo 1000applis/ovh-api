@@ -1,5 +1,7 @@
 package com.milleapplis.ovh.api.sms.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum SMSWayTypeEnum {
 	INCOMING("incoming"),
 	OUTGOING("outgoing");
@@ -10,10 +12,12 @@ public enum SMSWayTypeEnum {
 		this.priority = priority;
 	}
 	
+	@JsonValue
 	public String toString() {
 		return priority;
 	}
 	
+	@JsonValue
 	public SMSWayTypeEnum fromString(String value) {
 		if (value == null) {
 			return null;

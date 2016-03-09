@@ -1,5 +1,7 @@
 package com.milleapplis.ovh.api.sms.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum SMSPriorityEnum {
 	HIGH("high"),
 	LOW("low"),
@@ -12,10 +14,12 @@ public enum SMSPriorityEnum {
 		this.priority = priority;
 	}
 	
+	@JsonValue
 	public String toString() {
 		return priority;
 	}
 	
+	@JsonValue
 	public static SMSPriorityEnum fromString(String value) {
 		if (value == null) {
 			return null;

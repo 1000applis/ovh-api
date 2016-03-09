@@ -18,6 +18,10 @@ import com.milleapplis.ovh.api.util.Method;
 public class SMSService extends AbstractService {
 
 
+	public SMSService(Credential credential) {
+		super(credential);
+	}
+	
 	/**
 	 * Retourne la liste des comptes SMS associés à ce credential
 	 * 
@@ -25,9 +29,9 @@ public class SMSService extends AbstractService {
 	 * @return une liste des comptes SMS associé à ce crendential
 	 * @throws OVHApiException Si une erreur est identifiée.
 	 */
-	public List<String> getSMS(Credential credential) throws OVHApiException {
+	public List<String> getSMS() throws OVHApiException {
 		String url = String.format("sms/");
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService( Method.GET, url, "");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -47,9 +51,9 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifiée.
 	 */
-	public SMSServiceName getSMSServiceName(Credential credential, String serviceName) throws OVHApiException {
+	public SMSServiceName getSMSServiceName(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/", serviceName);
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService(Method.GET, url, "");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -61,9 +65,9 @@ public class SMSService extends AbstractService {
 	}
 
 	
-	public List<String> getSMSServicenameBlacklists(Credential credential, String serviceName) throws OVHApiException {
+	public List<String> getSMSServicenameBlacklists(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists", serviceName);
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService(Method.GET, url, "");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -74,9 +78,9 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public SMSBlacklist getSMSServicenameBlacklistsNumber(Credential credential, String serviceName, String number) throws OVHApiException {
+	public SMSBlacklist getSMSServicenameBlacklistsNumber(String serviceName, String number) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService(Method.GET, url, "");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -96,12 +100,12 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException  Si une erreur est identifiée.
 	 */
-	public void DeleteSMSServiceNameBlacklistsNumber(Credential credential, String serviceName, String number) throws OVHApiException {
+	public void DeleteSMSServiceNameBlacklistsNumber(String serviceName, String number) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
-		executeService(credential, Method.DELETE, url, "");
+		executeService(Method.DELETE, url, "");
 	}
 
-	public Long getSMSServicenameDocument(Credential credential, String serviceName, Date creationDateTimeFrom, Date creationDateTimeTo, String tag, SMSWayTypeEnum wayType) throws OVHApiException {
+	public Long getSMSServicenameDocument(String serviceName, Date creationDateTimeFrom, Date creationDateTimeTo, String tag, SMSWayTypeEnum wayType) throws OVHApiException {
 		String url = String.format("sms/%s/document", serviceName);
 		String separator = "?";
 		if (creationDateTimeFrom != null) {
@@ -120,7 +124,7 @@ public class SMSService extends AbstractService {
 			url += separator + "wayType=" + wayType.toString();
 			separator = "&";
 		}
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService(Method.GET, url, "");
 		
 		try {
 			return Long.parseLong(result);
@@ -141,7 +145,7 @@ public class SMSService extends AbstractService {
 	 * @return ???
 	 * @throws OVHApiException Si une erreur est identifiée.
 	 */
-	public String postSMSServiceNameJobs(Credential credential, String serviceName, POSTSmsJobParam smsJobParam) throws OVHApiException {
+	public String postSMSServiceNameJobs(String serviceName, POSTSmsJobParam smsJobParam) throws OVHApiException {
 		String url = String.format("sms/%s/jobs", serviceName);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -151,7 +155,7 @@ public class SMSService extends AbstractService {
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/jobs", serviceName), e);
 		}
-		return executeService(credential, Method.POST, url, body);
+		return executeService(Method.POST, url, body);
 	}
 
 	/**
@@ -163,9 +167,9 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifiée.
 	 */
-	public List<String> getSMSSenders(Credential credential, String serviceName) throws OVHApiException {
+	public List<String> getSMSSenders(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/senders", serviceName);
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService(Method.GET, url, "");
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -186,7 +190,7 @@ public class SMSService extends AbstractService {
 	 * @return
 	 * @throws OVHApiException OVHApiException Si une erreur est identifiée.
 	 */
-	public String PostSMSSenders(Credential credential, String serviceName, POSTSmsSendersParam smsSenders) throws OVHApiException {
+	public String PostSMSSenders(String serviceName, POSTSmsSendersParam smsSenders) throws OVHApiException {
 		if (smsSenders == null || smsSenders.getSender() == null) {
 			throw new OVHApiException("Sender ID cannot be null.");
 		}
@@ -205,7 +209,7 @@ public class SMSService extends AbstractService {
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/jobs", serviceName), e);
 		}
-		return executeService(credential, Method.POST, url, body);
+		return executeService(Method.POST, url, body);
 	}
 	
 	/**
@@ -218,9 +222,9 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifiée.
 	 */
-	public SMSSender GetSMSSender(Credential credential, String serviceName, String sender) throws OVHApiException {
+	public SMSSender GetSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
-		String result = executeService(credential, Method.GET, url, "");
+		String result = executeService(Method.GET, url, "");
 
 		System.out.println("Result : " + result);
 		
@@ -244,7 +248,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifiée.
 	 */
-	public String PutSMSSenders(Credential credential, String serviceName, String sender, SMSSender smsSender) throws OVHApiException {
+	public String PutSMSSenders(String serviceName, String sender, SMSSender smsSender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -255,7 +259,7 @@ public class SMSService extends AbstractService {
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/jobs", serviceName), e);
 		}
-		return executeService(credential, Method.PUT, url, body);
+		return executeService(Method.PUT, url, body);
 	}
 
 
@@ -268,16 +272,16 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException  Si une erreur est identifiée.
 	 */
-	public void DeleteSMSSender(Credential credential, String serviceName, String sender) throws OVHApiException {
+	public void DeleteSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
-		executeService(credential, Method.DELETE, url, "");
+		executeService(Method.DELETE, url, "");
 	}
 
 	/**
 	 * Valide un sender id pas rapport à un code de validation
 	 * 
 	 */
-	public String PostSMSSendersValidate(Credential credential, String serviceName, String sender, String code) throws OVHApiException {
+	public String PostSMSSendersValidate(String serviceName, String sender, String code) throws OVHApiException {
 		if (code == null) {
 			throw new OVHApiException("Validation code cannot be null.");
 		}
@@ -285,7 +289,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/senders/%s/validate", serviceName, sender);
 		String body = null;
 		body = String.format("{\"code\":\"%s\"}", code);
-		return executeService(credential, Method.POST, url, body);
+		return executeService(Method.POST, url, body);
 	}
 
 	

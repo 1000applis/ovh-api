@@ -1,5 +1,7 @@
 package com.milleapplis.ovh.api.sms.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum SMSCodingEnum {
 	SEVEN_BIT("7bit"),
 	EIGHT_BIT("8bit");
@@ -10,10 +12,12 @@ public enum SMSCodingEnum {
 		this.priority = priority;
 	}
 	
+	@JsonValue
 	public String toString() {
 		return priority;
 	}
 	
+	@JsonValue
 	public SMSCodingEnum fromString(String value) {
 		if (value == null) {
 			return null;
