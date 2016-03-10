@@ -4,11 +4,17 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.milleapplis.ovh.api.core.OVHApiException;
 
 public class ApiUtil {
 
+	private static final Logger LOG = LoggerFactory.getLogger(ApiUtil.class);
+
 	public static String HashSHA1(String text) throws OVHApiException {
+		
 		MessageDigest md;
 		try {
 			md = MessageDigest.getInstance("SHA-1");
@@ -50,9 +56,9 @@ public class ApiUtil {
 
         //Creation de la signature
         String toSign    = applicationSecret + "+" + consumerKey + "+" + method.toString() + "+" + query + "+" + body + "+" + timestamp;
-        System.out.println("ToSign = " + toSign);
+        LOG.debug("ToSign = " + toSign);
         String signature = "$1$" + HashSHA1(toSign);
-        System.out.println("Signature = " + signature);
+        LOG.debug("Signature = " + signature);
         
         return signature;
 	}

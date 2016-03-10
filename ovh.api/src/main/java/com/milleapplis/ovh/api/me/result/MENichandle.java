@@ -2,6 +2,7 @@ package com.milleapplis.ovh.api.me.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.me.enums.MEApplicationStatusEnum;
+import com.milleapplis.ovh.api.me.enums.MECountryEnum;
 import com.milleapplis.ovh.api.me.enums.MELanguageEnum;
 import com.milleapplis.ovh.api.me.enums.MELegalFormEnum;
 import com.milleapplis.ovh.api.me.enums.MEStateEnum;
@@ -45,10 +46,8 @@ public class MENichandle {
 	private String companyNationalIdentificationNumber;
 	@JsonProperty
 	private String birthCity;
-	//TODO change country into enum
 	@JsonProperty
-	private String country;
-	//TODO change language into enum
+	private MECountryEnum country;
 	@JsonProperty
 	private MELanguageEnum language;
 	@JsonProperty
@@ -170,10 +169,10 @@ public class MENichandle {
 	public void setBirthCity(String birthCity) {
 		this.birthCity = birthCity;
 	}
-	public String getCountry() {
+	public MECountryEnum getCountry() {
 		return country;
 	}
-	public void setCountry(String country) {
+	public void setCountry(MECountryEnum country) {
 		this.country = country;
 	}
 	public MELanguageEnum getLanguage() {

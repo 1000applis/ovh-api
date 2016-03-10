@@ -8,6 +8,7 @@ import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
 import com.milleapplis.ovh.api.me.enums.MECredentialStateEnum;
 import com.milleapplis.ovh.api.me.result.MEApplication;
+import com.milleapplis.ovh.api.me.result.MECredential;
 import com.milleapplis.ovh.api.me.result.MENichandle;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.util.Method;
@@ -78,6 +79,19 @@ public class MEServices extends AbstractService {
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/api/credential?applicationId=%s", applicationId), e);
+		}
+	}
+	
+	public MECredential getMEApiCredential(long credentialId) throws OVHApiException {
+		String url = String.format("me/api/credential/%s", credentialId);
+		String result = executeService(Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, MECredential.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("me/api/credential/%s", credentialId), e);
 		}
 	}
 	
