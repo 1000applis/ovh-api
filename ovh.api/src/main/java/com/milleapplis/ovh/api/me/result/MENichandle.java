@@ -1,14 +1,13 @@
 package com.milleapplis.ovh.api.me.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.milleapplis.ovh.api.me.enums.MEApplicationStatusEnum;
 import com.milleapplis.ovh.api.me.enums.MECountryEnum;
+import com.milleapplis.ovh.api.me.enums.MEGenderEnum;
 import com.milleapplis.ovh.api.me.enums.MELanguageEnum;
 import com.milleapplis.ovh.api.me.enums.MELegalFormEnum;
-import com.milleapplis.ovh.api.me.enums.MEStateEnum;
 import com.milleapplis.ovh.api.me.enums.MEOvhCompanyEnum;
 import com.milleapplis.ovh.api.me.enums.MEOvhSubsidiaryEnum;
-import com.milleapplis.ovh.api.me.enums.MEGenderEnum;
+import com.milleapplis.ovh.api.me.enums.MEStateEnum;
 
 public class MENichandle {
 

@@ -10,7 +10,6 @@ import com.milleapplis.ovh.api.me.enums.MECredentialStateEnum;
 import com.milleapplis.ovh.api.me.result.MEApplication;
 import com.milleapplis.ovh.api.me.result.MECredential;
 import com.milleapplis.ovh.api.me.result.MENichandle;
-import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.util.Method;
 
 public class MEServices extends AbstractService {
