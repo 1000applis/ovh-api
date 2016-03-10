@@ -8,6 +8,7 @@ import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
 import com.milleapplis.ovh.api.me.enums.MECredentialStateEnum;
 import com.milleapplis.ovh.api.me.result.MEApplication;
+import com.milleapplis.ovh.api.me.result.MENichandle;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.util.Method;
 
@@ -17,6 +18,20 @@ public class MEServices extends AbstractService {
 		super(credential);
 	}
 
+	public MENichandle getME() throws OVHApiException {
+		String url = String.format("me");
+		String result = executeService(Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, MENichandle.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service me"), e);
+		}
+	}
+	
+	
 	public List<Long> getMEApiApplication() throws OVHApiException {
 		String url = String.format("me/api/application");
 		String result = executeService(Method.GET, url, "");
