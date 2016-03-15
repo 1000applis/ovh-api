@@ -9,6 +9,7 @@ import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
 import com.milleapplis.ovh.api.me.enums.MECredentialStateEnum;
 import com.milleapplis.ovh.api.me.result.MEApplication;
+import com.milleapplis.ovh.api.me.result.MEBill;
 import com.milleapplis.ovh.api.me.result.MECredential;
 import com.milleapplis.ovh.api.me.result.MENichandle;
 import com.milleapplis.ovh.api.util.Method;
@@ -136,5 +137,17 @@ public class MEServices extends AbstractService {
 		}
 	}
 
+	public MEBill getMEBill(String billId) throws OVHApiException {
+		String url = String.format("me/bill/%s", billId);
+		String result = executeService(Method.GET, url, "");
+		System.out.println(result);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, MEBill.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("me/bill/%s", billId), e);
+		}
+	}
 	
 }

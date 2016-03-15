@@ -3,8 +3,6 @@ package com.milleapplis.ovh.api.me.result;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.milleapplis.ovh.api.me.enums.MEAuthMethodEnum;
-import com.milleapplis.ovh.api.me.enums.MECurrencyCodeEnum;
 
 public class MEBill {
 
