@@ -24,11 +24,11 @@ public class SMSService extends AbstractService {
 	}
 	
 	/**
-	 * Retourne la liste des comptes SMS associ�s � ce credential
+	 * Get all sms account from this credential
 	 * 
-	 * @param credential Cl�s � utiliser pour l'acc�s aux comptes
-	 * @return une liste des comptes SMS associ� � ce crendential
-	 * @throws OVHApiException Si une erreur est identifi�e.
+	 * @param credential credential to use
+	 * @return account list
+	 * @throws OVHApiException If an error occurd
 	 */
 	public List<String> getSMS() throws OVHApiException {
 		String url = String.format("sms/");

@@ -1,5 +1,6 @@
 package com.milleapplis.ovh.api.me;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -94,5 +95,46 @@ public class MEServices extends AbstractService {
 		}
 	}
 	
+	public void DeleteMEApiCredential(long credentialId) throws OVHApiException {
+		String url = String.format("me/api/credential//%s", credentialId);
+		executeService(Method.DELETE, url, "");
+	}
+	
+	public MEApplication getMEApiCredentialApplication(long credentialId) throws OVHApiException {
+		String url = String.format("me/api/credential/%s/application", credentialId);
+		String result = executeService(Method.GET, url, "");
+		System.out.println(result);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, MEApplication.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("me/api/credential/%s/application", credentialId), e);
+		}
+	}
+	
+	
+	public List<String> getMEBill(Date from, Date to) throws OVHApiException {
+		String url = String.format("me/bill");
+		String separator = "?";
+		if (from != null) {
+			url += separator + "date.from=" + from;
+			separator  = "&";
+		}
+		if (to != null) {
+			url += separator + "date.to=" + to;
+		}
+
+		String result = executeService(Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, List.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("me/bill"), e);
+		}
+	}
+
 	
 }
