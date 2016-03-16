@@ -11,9 +11,9 @@ public class MEBill {
 	@JsonProperty
 	private Date date;
 	@JsonProperty
-	private Price priceWithoutTax;
+	private MEPrice priceWithoutTax;
 	@JsonProperty
-	private Price tax;
+	private MEPrice tax;
 	@JsonProperty
 	private String billId;
 	@JsonProperty
@@ -23,7 +23,7 @@ public class MEBill {
 	@JsonProperty
 	private String url;
 	@JsonProperty
-	private Price priceWithTax;
+	private MEPrice priceWithTax;
 	
 	
 	public String getPdfUrl() {
@@ -38,16 +38,16 @@ public class MEBill {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Price getPriceWithoutTax() {
+	public MEPrice getPriceWithoutTax() {
 		return priceWithoutTax;
 	}
-	public void setPriceWithoutTax(Price priceWithoutTax) {
+	public void setPriceWithoutTax(MEPrice priceWithoutTax) {
 		this.priceWithoutTax = priceWithoutTax;
 	}
-	public Price getTax() {
+	public MEPrice getTax() {
 		return tax;
 	}
-	public void setTax(Price tax) {
+	public void setTax(MEPrice tax) {
 		this.tax = tax;
 	}
 	public String getBillId() {
@@ -74,10 +74,10 @@ public class MEBill {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Price getPriceWithTax() {
+	public MEPrice getPriceWithTax() {
 		return priceWithTax;
 	}
-	public void setPriceWithTax(Price priceWithTax) {
+	public void setPriceWithTax(MEPrice priceWithTax) {
 		this.priceWithTax = priceWithTax;
 	}
 	
