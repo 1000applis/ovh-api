@@ -1,14 +1,14 @@
-package com.milleapplis.ovh.api.me.enums;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MEStateEnum {
+public enum StateEnum {
 	COMPLETE("complete"),
 	INCOMPLETE("incomplete");
 	
 	private String priority; 
 	
-	private MEStateEnum(String priority) {
+	private StateEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -18,11 +18,11 @@ public enum MEStateEnum {
 	}
 	
 	@JsonValue
-	public MEStateEnum fromString(String value) {
+	public StateEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (MEStateEnum currentPriority : MEStateEnum.values()) {
+		for (StateEnum currentPriority : StateEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

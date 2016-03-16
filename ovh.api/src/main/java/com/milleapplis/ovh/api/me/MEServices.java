@@ -15,8 +15,8 @@ import com.milleapplis.ovh.api.me.result.MEApplication;
 import com.milleapplis.ovh.api.me.result.MEBill;
 import com.milleapplis.ovh.api.me.result.MEBillDetail;
 import com.milleapplis.ovh.api.me.result.MECredential;
-import com.milleapplis.ovh.api.me.result.MENichandle;
 import com.milleapplis.ovh.api.me.result.MEPayment;
+import com.milleapplis.ovh.api.nichandle.Nichandle;
 import com.milleapplis.ovh.api.util.Method;
 
 public class MEServices extends AbstractService {
@@ -27,7 +27,7 @@ public class MEServices extends AbstractService {
 		super(credential);
 	}
 
-	public MENichandle getME() throws OVHApiException {
+	public Nichandle getME() throws OVHApiException {
 		String url = String.format("me");
 		String result = executeService(Method.GET, url, "");
 
@@ -35,7 +35,7 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MENichandle.class);
+			return mapper.readValue(result, Nichandle.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service me"), e);

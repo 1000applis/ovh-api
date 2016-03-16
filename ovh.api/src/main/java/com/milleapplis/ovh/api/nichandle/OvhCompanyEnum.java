@@ -1,16 +1,15 @@
-package com.milleapplis.ovh.api.me.enums;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MELegalFormEnum {
-	ASSOCIATION("association"),
-	CORPORATION("corporation"),
-	INDIVIDUAL("individual"),
-	OTHER("other");
+public enum OvhCompanyEnum {
+	KIMSUFI("kimsufi"),
+	OVH("ovh"),
+	SOYOUSTART("soyoustart");
 	
 	private String priority; 
 	
-	private MELegalFormEnum(String priority) {
+	private OvhCompanyEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -20,11 +19,11 @@ public enum MELegalFormEnum {
 	}
 	
 	@JsonValue
-	public MELegalFormEnum fromString(String value) {
+	public OvhCompanyEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (MELegalFormEnum currentPriority : MELegalFormEnum.values()) {
+		for (OvhCompanyEnum currentPriority : OvhCompanyEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

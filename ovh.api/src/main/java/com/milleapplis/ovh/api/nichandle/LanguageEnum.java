@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.me.enums;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MELanguageEnum {
+public enum LanguageEnum {
 	cs_CZ("cs_CZ"),
 	de_DE("de_DE"),
 	en_GB("en_GB"),
@@ -21,7 +21,7 @@ public enum MELanguageEnum {
 	
 	private String priority; 
 	
-	private MELanguageEnum(String priority) {
+	private LanguageEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -31,11 +31,11 @@ public enum MELanguageEnum {
 	}
 	
 	@JsonValue
-	public MELanguageEnum fromString(String value) {
+	public LanguageEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (MELanguageEnum currentPriority : MELanguageEnum.values()) {
+		for (LanguageEnum currentPriority : LanguageEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

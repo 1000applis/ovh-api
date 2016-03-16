@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.me.enums;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MEOvhSubsidiaryEnum {
+public enum OvhSubsidiaryEnum {
     CA("CA"),
     CZ("CZ"),
     DE("DE"),
@@ -26,7 +26,7 @@ public enum MEOvhSubsidiaryEnum {
 	
 	private String priority; 
 	
-	private MEOvhSubsidiaryEnum(String priority) {
+	private OvhSubsidiaryEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -36,11 +36,11 @@ public enum MEOvhSubsidiaryEnum {
 	}
 	
 	@JsonValue
-	public MEOvhSubsidiaryEnum fromString(String value) {
+	public OvhSubsidiaryEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (MEOvhSubsidiaryEnum currentPriority : MEOvhSubsidiaryEnum.values()) {
+		for (OvhSubsidiaryEnum currentPriority : OvhSubsidiaryEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

@@ -1,14 +1,14 @@
-package com.milleapplis.ovh.api.me.enums;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MEGenderEnum {
+public enum GenderEnum {
 	FEMALE("female"),
 	MALE("male");
 	
 	private String priority; 
 	
-	private MEGenderEnum(String priority) {
+	private GenderEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -18,11 +18,11 @@ public enum MEGenderEnum {
 	}
 	
 	@JsonValue
-	public MEGenderEnum fromString(String value) {
+	public GenderEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (MEGenderEnum currentPriority : MEGenderEnum.values()) {
+		for (GenderEnum currentPriority : GenderEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

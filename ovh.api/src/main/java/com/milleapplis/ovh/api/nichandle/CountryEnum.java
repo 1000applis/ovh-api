@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.me.enums;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MECountryEnum {
+public enum CountryEnum {
 	AD("AD"),
 	AE("AE"),
 	AF("AF"),
@@ -256,7 +256,7 @@ public enum MECountryEnum {
 	
 	private String priority; 
 	
-	private MECountryEnum(String priority) {
+	private CountryEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -266,11 +266,11 @@ public enum MECountryEnum {
 	}
 	
 	@JsonValue
-	public MECountryEnum fromString(String value) {
+	public CountryEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (MECountryEnum currentPriority : MECountryEnum.values()) {
+		for (CountryEnum currentPriority : CountryEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

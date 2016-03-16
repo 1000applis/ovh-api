@@ -1,22 +1,15 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.milleapplis.ovh.api.me.enums.MECountryEnum;
-import com.milleapplis.ovh.api.me.enums.MEGenderEnum;
-import com.milleapplis.ovh.api.me.enums.MELanguageEnum;
-import com.milleapplis.ovh.api.me.enums.MELegalFormEnum;
-import com.milleapplis.ovh.api.me.enums.MEOvhCompanyEnum;
-import com.milleapplis.ovh.api.me.enums.MEOvhSubsidiaryEnum;
-import com.milleapplis.ovh.api.me.enums.MEStateEnum;
 
-public class MENichandle {
+public class Nichandle {
 
 	@JsonProperty
 	private String firstname;
 	@JsonProperty
 	private String vat;
 	@JsonProperty
-	private MEOvhSubsidiaryEnum ovhSubsidiary;
+	private OvhSubsidiaryEnum ovhSubsidiary;
 	@JsonProperty
 	private String area;
 	@JsonProperty
@@ -26,13 +19,13 @@ public class MENichandle {
 	@JsonProperty
 	private String spareEmail;
 	@JsonProperty
-	private MEOvhCompanyEnum ovhCompany;
+	private OvhCompanyEnum ovhCompany;
 	@JsonProperty
-	private MEStateEnum state;
+	private StateEnum state;
 	@JsonProperty
 	private String email;
 	@JsonProperty
-	private MECurrency currency;
+	private Currency currency;
 	@JsonProperty
 	private String city;
 	@JsonProperty
@@ -46,9 +39,9 @@ public class MENichandle {
 	@JsonProperty
 	private String birthCity;
 	@JsonProperty
-	private MECountryEnum country;
+	private CountryEnum country;
 	@JsonProperty
-	private MELanguageEnum language;
+	private LanguageEnum language;
 	@JsonProperty
 	private String organisation;
 	@JsonProperty
@@ -56,13 +49,13 @@ public class MENichandle {
 	@JsonProperty
 	private String phone;
 	@JsonProperty
-	private MEGenderEnum sex;
+	private GenderEnum sex;
 	@JsonProperty
 	private String zip;
 	@JsonProperty
 	private String corporationType;
 	@JsonProperty
-	private MELegalFormEnum legalform;
+	private LegalFormEnum legalform;
 	
 	
 	public String getFirstname() {
@@ -77,10 +70,10 @@ public class MENichandle {
 	public void setVat(String vat) {
 		this.vat = vat;
 	}
-	public MEOvhSubsidiaryEnum getOvhSubsidiary() {
+	public OvhSubsidiaryEnum getOvhSubsidiary() {
 		return ovhSubsidiary;
 	}
-	public void setOvhSubsidiary(MEOvhSubsidiaryEnum ovhSubsidiary) {
+	public void setOvhSubsidiary(OvhSubsidiaryEnum ovhSubsidiary) {
 		this.ovhSubsidiary = ovhSubsidiary;
 	}
 	public String getArea() {
@@ -107,16 +100,16 @@ public class MENichandle {
 	public void setSpareEmail(String spareEmail) {
 		this.spareEmail = spareEmail;
 	}
-	public MEOvhCompanyEnum getOvhCompany() {
+	public OvhCompanyEnum getOvhCompany() {
 		return ovhCompany;
 	}
-	public void setOvhCompany(MEOvhCompanyEnum ovhCompany) {
+	public void setOvhCompany(OvhCompanyEnum ovhCompany) {
 		this.ovhCompany = ovhCompany;
 	}
-	public MEStateEnum getState() {
+	public StateEnum getState() {
 		return state;
 	}
-	public void setState(MEStateEnum state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 	public String getEmail() {
@@ -125,10 +118,10 @@ public class MENichandle {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public MECurrency getCurrency() {
+	public Currency getCurrency() {
 		return currency;
 	}
-	public void setCurrency(MECurrency currency) {
+	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
 	public String getCity() {
@@ -168,16 +161,16 @@ public class MENichandle {
 	public void setBirthCity(String birthCity) {
 		this.birthCity = birthCity;
 	}
-	public MECountryEnum getCountry() {
+	public CountryEnum getCountry() {
 		return country;
 	}
-	public void setCountry(MECountryEnum country) {
+	public void setCountry(CountryEnum country) {
 		this.country = country;
 	}
-	public MELanguageEnum getLanguage() {
+	public LanguageEnum getLanguage() {
 		return language;
 	}
-	public void setLanguage(MELanguageEnum language) {
+	public void setLanguage(LanguageEnum language) {
 		this.language = language;
 	}
 	public String getOrganisation() {
@@ -198,10 +191,10 @@ public class MENichandle {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public MEGenderEnum getSex() {
+	public GenderEnum getSex() {
 		return sex;
 	}
-	public void setSex(MEGenderEnum sex) {
+	public void setSex(GenderEnum sex) {
 		this.sex = sex;
 	}
 	public String getZip() {
@@ -216,10 +209,10 @@ public class MENichandle {
 	public void setCorporationType(String corporationType) {
 		this.corporationType = corporationType;
 	}
-	public MELegalFormEnum getLegalform() {
+	public LegalFormEnum getLegalform() {
 		return legalform;
 	}
-	public void setLegalform(MELegalFormEnum legalform) {
+	public void setLegalform(LegalFormEnum legalform) {
 		this.legalform = legalform;
 	}
 	

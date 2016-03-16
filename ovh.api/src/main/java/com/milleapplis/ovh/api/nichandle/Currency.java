@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.nichandle;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MECurrency {
+public class Currency {
 
 	@JsonProperty
 	private String symbol;
