@@ -20,7 +20,7 @@ public class SMSIncoming {
 	private String message;
 	
 	public String toString() {
-		return String.format("[Credit : %s][Sender : %s][Creation date : ‰s][Tag : %][Message : %s]", credits, sender, creationDatetime, tag, message);
+		return String.format("[Credit : %s][Sender : %s][Creation date : ‰s][Tag : %s][Message : %s]", credits, sender, creationDatetime, tag, message);
 	}
 	
 	public double getCredits() {

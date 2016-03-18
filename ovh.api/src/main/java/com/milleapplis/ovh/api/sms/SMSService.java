@@ -12,6 +12,7 @@ import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.sms.result.SMSIncoming;
+import com.milleapplis.ovh.api.sms.result.SMSOutgoing;
 import com.milleapplis.ovh.api.sms.result.SMSPttDetails;
 import com.milleapplis.ovh.api.sms.result.SMSSender;
 import com.milleapplis.ovh.api.sms.result.SMSServiceName;
@@ -157,7 +158,7 @@ public class SMSService extends AbstractService {
 	}
 	
 	public List<Long> getSMSServicenameIncoming(String serviceName, Date creationDateTimeFrom, Date creationDateTimeTo, String sender, String tag) throws OVHApiException {
-		String url = String.format("sms/%s/document", serviceName);
+		String url = String.format("sms/%s/incoming", serviceName);
 		String separator = "?";
 		if (creationDateTimeFrom != null) {
 			url += separator + "creationDatetime.from=" + creationDateTimeFrom;
@@ -239,6 +240,73 @@ public class SMSService extends AbstractService {
 		return executeService(Method.POST, url, body);
 	}
 
+	public List<Long> getSMSServicenameOutgoing(String serviceName, Date creationDateTimeFrom, Date creationDateTimeTo, Long deliveryReceipt, Long differedDelivery, Long ptt, String receiver, String sender, String tag) throws OVHApiException {
+		String url = String.format("sms/%s/outgoing", serviceName);
+		String separator = "?";
+		if (creationDateTimeFrom != null) {
+			url += separator + "creationDatetime.from=" + creationDateTimeFrom;
+			separator = "&";
+		}
+		if (creationDateTimeTo != null) {
+			url += separator + "creationDatetime.to=" + creationDateTimeTo;
+			separator = "&";
+		}
+		if (deliveryReceipt != null) {
+			url += separator + "deliveryReceipt=" + deliveryReceipt;
+			separator = "&";
+		}
+		if (differedDelivery != null) {
+			url += separator + "differedDelivery=" + differedDelivery;
+			separator = "&";
+		}
+		if (ptt != null) {
+			url += separator + "ptt=" + ptt;
+			separator = "&";
+		}
+		if (receiver != null) {
+			url += separator + "receiver=" + receiver;
+			separator = "&";
+		}
+		if (tag != null) {
+			url += separator + "tag=" + tag;
+			separator = "&";
+		}
+		if (sender != null) {
+			url += separator + "sender=" + sender.toString();
+			separator = "&";
+		}
+		String result = executeService(Method.GET, url, "");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, List.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service %s", url), e);
+		}
+	}
+	
+	public SMSOutgoing getSMSServicenameOutgoing(String serviceName, long smsId) throws OVHApiException {
+		String url = String.format("sms/%s/outgoing/%s", serviceName, smsId);
+		String result = executeService(Method.GET, url, "");
+		
+		//System.out.println("Result : " + result);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, SMSOutgoing.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/outgoing/%s", serviceName, smsId), e);
+		}
+	}
+
+	public void DeleteSMSServicenameOutgoing(String serviceName, String smsId) throws OVHApiException {
+		String url = String.format("sms/%s/outgoint/%s", serviceName, smsId);
+		executeService(Method.DELETE, url, "");
+	}
+	
+	
 	/**
 	 * R�cup�re la liste des Sender ID pour un compte SMS
 	 * 
