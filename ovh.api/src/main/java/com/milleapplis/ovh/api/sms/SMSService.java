@@ -44,7 +44,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/");
 		String result = executeService( Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -59,7 +59,7 @@ public class SMSService extends AbstractService {
 		String url =String.format("sms/ptts?ptt=%", ptt);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -84,7 +84,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/", serviceName);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -100,7 +100,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/blacklists", serviceName);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -115,7 +115,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -137,7 +137,7 @@ public class SMSService extends AbstractService {
 	 */
 	public void DeleteSMSServiceNameBlacklistsNumber(String serviceName, String number) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
-		LOG.info(String.format("%s ==> %s" , url));
+		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
 	}
 
@@ -162,7 +162,7 @@ public class SMSService extends AbstractService {
 		}
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		try {
 			return Long.parseLong(result);
@@ -199,7 +199,7 @@ public class SMSService extends AbstractService {
 		}
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -214,7 +214,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/incoming/%s", serviceName, smsId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -227,7 +227,7 @@ public class SMSService extends AbstractService {
 
 	public void DeleteSMSServicenameIncoming(String serviceName, String smsId) throws OVHApiException {
 		String url = String.format("sms/%s/incoming/%s", serviceName, smsId);
-		LOG.info(String.format("%s ==> %s" , url));
+		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
 	}
 
@@ -235,7 +235,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/jobs", serviceName);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -312,7 +312,7 @@ public class SMSService extends AbstractService {
 		}
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -327,7 +327,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/outgoing/%s", serviceName, smsId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -340,7 +340,7 @@ public class SMSService extends AbstractService {
 
 	public void DeleteSMSServicenameOutgoing(String serviceName, long smsId) throws OVHApiException {
 		String url = String.format("sms/%s/outgoing/%s", serviceName, smsId);
-		LOG.info(String.format("%s ==> %s" , url));
+		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
 	}
 	
@@ -349,7 +349,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/outgoing/%s/hlr", serviceName, smsId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -364,7 +364,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/receivers", serviceName);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -408,7 +408,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/senders", serviceName);
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -466,7 +466,7 @@ public class SMSService extends AbstractService {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -515,7 +515,7 @@ public class SMSService extends AbstractService {
 	 */
 	public void DeleteSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
-		LOG.info(String.format("%s ==> %s" , url));
+		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
 	}
 
