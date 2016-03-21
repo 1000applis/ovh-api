@@ -31,7 +31,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me");
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -47,7 +47,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/api/application");
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -63,7 +63,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/api/application/%s", applicationId);
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -76,7 +76,7 @@ public class MEServices extends AbstractService {
 
 	public void DeleteMEApiApplication(long applicationId) throws OVHApiException {
 		String url = String.format("me/api/application/%s", applicationId);
-		LOG.info(String.format("%s" , url));
+		LOG.debug(String.format("%s" , url));
 		executeService(Method.DELETE, url, "");
 	}
 
@@ -87,7 +87,7 @@ public class MEServices extends AbstractService {
 		}
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -102,7 +102,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/api/credential/%s", credentialId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -115,7 +115,7 @@ public class MEServices extends AbstractService {
 	
 	public void DeleteMEApiCredential(long credentialId) throws OVHApiException {
 		String url = String.format("me/api/credential//%s", credentialId);
-		LOG.info(String.format("%s" , url));
+		LOG.debug(String.format("%s" , url));
 		executeService(Method.DELETE, url, "");
 	}
 	
@@ -123,7 +123,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/api/credential/%s/application", credentialId);
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -147,7 +147,7 @@ public class MEServices extends AbstractService {
 		}
 		String result = executeService(Method.GET, url, "");
 
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -162,7 +162,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/bill/%s", billId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -177,7 +177,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/bill/%s/details", billId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -192,7 +192,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/bill/%s/details/%s", billId, detailId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -207,7 +207,7 @@ public class MEServices extends AbstractService {
 		String url = String.format("me/bill/%s/payment", billId);
 		String result = executeService(Method.GET, url, "");
 		
-		LOG.info(String.format("%s ==> %s" , url, result));
+		LOG.debug(String.format("%s ==> %s" , url, result));
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
