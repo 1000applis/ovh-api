@@ -10,21 +10,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milleapplis.ovh.api.core.AbstractService;
 import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
+import com.milleapplis.ovh.api.sms.enums.ReferenceCountryEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSCountryEnum;
+import com.milleapplis.ovh.api.sms.enums.SMSPackQuantityEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSWayTypeEnum;
 import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsReceiversParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
+import com.milleapplis.ovh.api.sms.param.PUTServiceParam;
+import com.milleapplis.ovh.api.sms.param.ServiceRenew;
 import com.milleapplis.ovh.api.sms.result.ReceiversAsynchronousCleanReport;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.sms.result.SMSHlr;
 import com.milleapplis.ovh.api.sms.result.SMSIncoming;
 import com.milleapplis.ovh.api.sms.result.SMSOutgoing;
+import com.milleapplis.ovh.api.sms.result.SMSPackOffer;
 import com.milleapplis.ovh.api.sms.result.SMSPttDetails;
 import com.milleapplis.ovh.api.sms.result.SMSReceiver;
 import com.milleapplis.ovh.api.sms.result.SMSSender;
 import com.milleapplis.ovh.api.sms.result.SMSSendingReport;
 import com.milleapplis.ovh.api.sms.result.SMSServiceName;
+import com.milleapplis.ovh.api.sms.result.ServicesService;
 import com.milleapplis.ovh.api.util.Method;
 
 public class SMSService extends AbstractService {
@@ -137,7 +143,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException  Si une erreur est identifi�e.
 	 */
-	public void DeleteSMSServiceNameBlacklistsNumber(String serviceName, String number) throws OVHApiException {
+	public void deleteSMSServiceNameBlacklistsNumber(String serviceName, String number) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
 		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
@@ -227,7 +233,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public void DeleteSMSServicenameIncoming(String serviceName, String smsId) throws OVHApiException {
+	public void deleteSMSServicenameIncoming(String serviceName, String smsId) throws OVHApiException {
 		String url = String.format("sms/%s/incoming/%s", serviceName, smsId);
 		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
@@ -340,7 +346,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public void DeleteSMSServicenameOutgoing(String serviceName, long smsId) throws OVHApiException {
+	public void deleteSMSServicenameOutgoing(String serviceName, long smsId) throws OVHApiException {
 		String url = String.format("sms/%s/outgoing/%s", serviceName, smsId);
 		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
@@ -411,7 +417,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public void DeleteSMSServicenameSlotId(String serviceName, long slotId) throws OVHApiException {
+	public void deleteSMSServicenameSlotId(String serviceName, long slotId) throws OVHApiException {
 		String url = String.format("sms/%s/receivers/%s", serviceName, slotId);
 		LOG.info(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
@@ -447,7 +453,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public String getSMSServicenameSeeOffers(String serviceName, ReferenceCountyEnum countryCurrencyPrice, SMSCountryEnum countryDestination, SMSPackQuantytiEnum quantity) throws OVHApiException {
+	public List<SMSPackOffer> getSMSServicenameSeeOffers(String serviceName, ReferenceCountryEnum countryCurrencyPrice, SMSCountryEnum countryDestination, SMSPackQuantityEnum quantity) throws OVHApiException {
 		String url = String.format("sms/%s/seeOffers?countryCurrencyPrice=%s&countryDestination=%s&quantity=%s", serviceName, countryCurrencyPrice.toString(), countryDestination.toString(), quantity.toString());
 		String result = executeService(Method.GET, url, "");
 		
@@ -455,7 +461,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, String.class);
+			return mapper.readValue(result, List.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service %s", url), e);
@@ -497,7 +503,7 @@ public class SMSService extends AbstractService {
 	 * @return
 	 * @throws OVHApiException OVHApiException Si une erreur est identifi�e.
 	 */
-	public String PostSMSSenders(String serviceName, POSTSmsSendersParam smsSenders) throws OVHApiException {
+	public String postSMSSenders(String serviceName, POSTSmsSendersParam smsSenders) throws OVHApiException {
 		if (smsSenders == null || smsSenders.getSender() == null) {
 			throw new OVHApiException("Sender ID cannot be null.");
 		}
@@ -530,7 +536,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifi�e.
 	 */
-	public SMSSender GetSMSSender(String serviceName, String sender) throws OVHApiException {
+	public SMSSender getSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		String result = executeService(Method.GET, url, "");
 
@@ -556,7 +562,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifi�e.
 	 */
-	public String PutSMSSenders(String serviceName, String sender, SMSSender smsSender) throws OVHApiException {
+	public String putSMSSenders(String serviceName, String sender, SMSSender smsSender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -581,7 +587,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException  Si une erreur est identifi�e.
 	 */
-	public void DeleteSMSSender(String serviceName, String sender) throws OVHApiException {
+	public void deleteSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
@@ -591,7 +597,7 @@ public class SMSService extends AbstractService {
 	 * Valide un sender id pas rapport � un code de validation
 	 * 
 	 */
-	public String PostSMSSendersValidate(String serviceName, String sender, String code) throws OVHApiException {
+	public String postSMSSendersValidate(String serviceName, String sender, String code) throws OVHApiException {
 		if (code == null) {
 			throw new OVHApiException("Validation code cannot be null.");
 		}
@@ -603,5 +609,36 @@ public class SMSService extends AbstractService {
 		return executeService(Method.POST, url, body);
 	}
 
+	public ServicesService getSMSServiceInfo(String serviceName) throws OVHApiException {
+		String url = String.format("sms/%s/serviceInfos", serviceName);
+		String result = executeService(Method.GET, url, "");
+
+		//System.out.println("Result : " + result);
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, ServicesService.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/serviceInfos", serviceName), e);
+		}
+	}
 	
+	public void putSMSServiceInfos(String serviceName, PUTServiceParam service) throws OVHApiException {
+		String url = String.format("sms/%s/serviceInfos", serviceName);
+		ObjectMapper mapper = new ObjectMapper();
+		String body = null;
+		try {
+			body = mapper.writeValueAsString(service);
+			System.out.println(body);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/serviceInfos", serviceName), e);
+		}
+		//TODO
+		executeService(Method.PUT, url, body);
+	}
+
+
 }
