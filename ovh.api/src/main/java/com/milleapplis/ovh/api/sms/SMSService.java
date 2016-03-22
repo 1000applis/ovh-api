@@ -14,6 +14,7 @@ import com.milleapplis.ovh.api.sms.enums.ReferenceCountryEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSCountryEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSPackQuantityEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSWayTypeEnum;
+import com.milleapplis.ovh.api.sms.enums.TelephonyTaskStatusEnum;
 import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsReceiversParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
@@ -30,6 +31,7 @@ import com.milleapplis.ovh.api.sms.result.SMSReceiver;
 import com.milleapplis.ovh.api.sms.result.SMSSender;
 import com.milleapplis.ovh.api.sms.result.SMSSendingReport;
 import com.milleapplis.ovh.api.sms.result.SMSServiceName;
+import com.milleapplis.ovh.api.sms.result.SMSTask;
 import com.milleapplis.ovh.api.sms.result.ServicesService;
 import com.milleapplis.ovh.api.util.Method;
 
@@ -640,5 +642,53 @@ public class SMSService extends AbstractService {
 		executeService(Method.PUT, url, body);
 	}
 
+	public List<Long> getSMSTask(String serviceName, TelephonyTaskStatusEnum status) throws OVHApiException {
+		String url = String.format("sms/%s/task", serviceName);
+		if (status != null) {
+			url = url + "?status=" + status.toString();
+		}
+		String result = executeService(Method.GET, url, "");
 
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, List.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/task", serviceName), e);
+		}
+	}
+
+	public SMSTask getSMSTask(String serviceName, long taskId) throws OVHApiException {
+		String url = String.format("sms/%s/task/%s", serviceName, taskId);
+		String result = executeService(Method.GET, url, "");
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, SMSTask.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/task/%s", serviceName, taskId), e);
+		}
+	}
+
+	public List<String> getSMSTemplatesControl(String serviceName) throws OVHApiException {
+		String url = String.format("sms/%s/templatesControl", serviceName);
+		String result = executeService(Method.GET, url, "");
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, List.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/templateControl", serviceName), e);
+		}
+	}
+	
+	
 }
