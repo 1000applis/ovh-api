@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milleapplis.ovh.api.core.AbstractService;
 import com.milleapplis.ovh.api.core.OVHApiException;
@@ -51,7 +52,8 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, List.class);
+			TypeReference<List<Long>> typeRef = new TypeReference<List<Long>>() {};
+			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service me/api/application"), e);
@@ -74,7 +76,7 @@ public class MEServices extends AbstractService {
 		}
 	}
 
-	public void DeleteMEApiApplication(long applicationId) throws OVHApiException {
+	public void deleteMEApiApplication(long applicationId) throws OVHApiException {
 		String url = String.format("me/api/application/%s", applicationId);
 		LOG.debug(String.format("%s" , url));
 		executeService(Method.DELETE, url, "");
@@ -91,7 +93,8 @@ public class MEServices extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, List.class);
+			TypeReference<List<Long>> typeRef = new TypeReference<List<Long>>() {};
+			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/api/credential?applicationId=%s", applicationId), e);
@@ -113,7 +116,7 @@ public class MEServices extends AbstractService {
 		}
 	}
 	
-	public void DeleteMEApiCredential(long credentialId) throws OVHApiException {
+	public void deleteMEApiCredential(long credentialId) throws OVHApiException {
 		String url = String.format("me/api/credential//%s", credentialId);
 		LOG.debug(String.format("%s" , url));
 		executeService(Method.DELETE, url, "");
@@ -151,7 +154,8 @@ public class MEServices extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, List.class);
+			TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {};
+			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/bill"), e);
@@ -181,7 +185,8 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, List.class);
+			TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {};
+			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/bill/%s/details", billId), e);
