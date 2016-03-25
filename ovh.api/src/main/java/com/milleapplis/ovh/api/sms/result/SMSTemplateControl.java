@@ -1,9 +1,12 @@
-package com.milleapplis.ovh.api.sms.param;
+package com.milleapplis.ovh.api.sms.result;
+
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.milleapplis.ovh.api.sms.enums.SMSStatusSenderEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSTypeTemplateEnum;
 
-public class POSTSmsTemplateControl {
+public class SMSTemplateControl {
 	@JsonProperty
 	private SMSTypeTemplateEnum activity;
 	@JsonProperty
@@ -14,6 +17,13 @@ public class POSTSmsTemplateControl {
 	private String name;
 	@JsonProperty
 	private String reason;
+	@JsonProperty
+	private String comment; 
+	@JsonProperty
+	private SMSStatusSenderEnum status;
+	@JsonProperty
+	private Date datetime;
+	
 	
 	
 	public SMSTypeTemplateEnum getActivity() {
@@ -45,6 +55,24 @@ public class POSTSmsTemplateControl {
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public SMSStatusSenderEnum getStatus() {
+		return status;
+	}
+	public void setStatus(SMSStatusSenderEnum status) {
+		this.status = status;
+	}
+	public Date getDatetime() {
+		return datetime;
+	}
+	public void setDatetime(Date datetime) {
+		this.datetime = datetime;
 	}
 	
 	

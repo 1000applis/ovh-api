@@ -19,8 +19,8 @@ import com.milleapplis.ovh.api.sms.enums.TelephonyTaskStatusEnum;
 import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsReceiversParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
-import com.milleapplis.ovh.api.sms.param.POSTSmsTemplateControl;
 import com.milleapplis.ovh.api.sms.param.PUTServiceParam;
+import com.milleapplis.ovh.api.sms.result.SMSTemplateControl;
 import com.milleapplis.ovh.api.sms.result.ReceiversAsynchronousCleanReport;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
 import com.milleapplis.ovh.api.sms.result.SMSHlr;
@@ -33,6 +33,7 @@ import com.milleapplis.ovh.api.sms.result.SMSSender;
 import com.milleapplis.ovh.api.sms.result.SMSSendingReport;
 import com.milleapplis.ovh.api.sms.result.SMSServiceName;
 import com.milleapplis.ovh.api.sms.result.SMSTask;
+import com.milleapplis.ovh.api.sms.result.SMSUsers;
 import com.milleapplis.ovh.api.sms.result.ServicesService;
 import com.milleapplis.ovh.api.util.Method;
 
@@ -698,7 +699,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public void postSMSTemplatesControl(String serviceName, POSTSmsTemplateControl templateControl) throws OVHApiException {
+	public void postSMSTemplatesControl(String serviceName, SMSTemplateControl templateControl) throws OVHApiException {
 		String url = String.format("sms/%s/templatesControl", serviceName);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -710,6 +711,72 @@ public class SMSService extends AbstractService {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/templateControl", serviceName), e);
 		}
 		executeService(Method.POST, url, body);
+	}
+	
+	public SMSTemplateControl getSMSTemplatesControl(String serviceName, String name) throws OVHApiException {
+		String url = String.format("sms/%s/templatesControl/%s", serviceName, name);
+		String result = executeService(Method.GET, url, "");
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<SMSTemplateControl> typeRef = new TypeReference<SMSTemplateControl>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/templateControl/%s", serviceName, name), e);
+		}
+	}
+	
+	public void postSMSTransferCredits(String serviceName, double credits, String smsAccountTarget) throws OVHApiException {
+		String url = String.format("sms/%s/transferCredits", serviceName);
+		String body = String.format("{\"credits\":%s, \"smsAccountTarget\":\"%s\"}", credits, smsAccountTarget);
+		
+		LOG.debug(String.format("%s ==> %s" , url, body));
+		
+		executeService(Method.POST, url, body);
+	}
+
+	public List<String> getSMSUsers(String serviceName) throws OVHApiException {
+		String url = String.format("sms/%s/users", serviceName);
+		String result = executeService(Method.GET, url, "");
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/users", serviceName), e);
+		}
+	}
+	
+	public void postSMSUsers(String serviceName, String login, String password) throws OVHApiException {
+		String url = String.format("sms/%s/users", serviceName);
+		String body = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", login, password);
+		
+		LOG.debug(String.format("%s ==> %s" , url, body));
+		
+		executeService(Method.POST, url, body);
+	}
+	
+	public SMSUsers getSMSUsers(String serviceName, String login) throws OVHApiException {
+		String url = String.format("sms/%s/users", serviceName);
+		String result = executeService(Method.GET, url, "");
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<SMSUsers> typeRef = new TypeReference<SMSUsers>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/users", serviceName), e);
+		}
 	}
 	
 	
