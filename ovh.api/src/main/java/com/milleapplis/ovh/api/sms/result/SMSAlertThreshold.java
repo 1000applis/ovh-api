@@ -5,7 +5,7 @@ import com.milleapplis.ovh.api.sms.enums.SMSSupportEnum;
 
 public class SMSAlertThreshold {
 	@JsonProperty
-	private SMSSupportEnum suport;
+	private SMSSupportEnum support;
 	@JsonProperty
 	private long alertThreshold;
 	@JsonProperty
@@ -14,15 +14,15 @@ public class SMSAlertThreshold {
 	private String alertNumber;
 	
 	public String toString() {
-		return String.format("[Suport : %s][Alert threshold : %s][Alert mail : %s][Alert number : %s]", suport, alertThreshold, alertEmail, alertNumber);
+		return String.format("[Suport : %s][Alert threshold : %s][Alert mail : %s][Alert number : %s]", support, alertThreshold, alertEmail, alertNumber);
 	}
 
 	public SMSSupportEnum getSuport() {
-		return suport;
+		return support;
 	}
 
 	public void setSuport(SMSSupportEnum suport) {
-		this.suport = suport;
+		this.support = suport;
 	}
 
 	public long getAlertThreshold() {

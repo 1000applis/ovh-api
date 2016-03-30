@@ -2,10 +2,13 @@ package com.milleapplis.ovh.api.sms.result;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.sms.enums.SMSStatusSenderEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSTypeTemplateEnum;
 
+@JsonInclude(Include.NON_NULL)
 public class SMSTemplateControl {
 	@JsonProperty
 	private SMSTypeTemplateEnum activity;
@@ -17,11 +20,11 @@ public class SMSTemplateControl {
 	private String name;
 	@JsonProperty
 	private String reason;
-	@JsonProperty
+	@JsonProperty(required=false)
 	private String comment; 
-	@JsonProperty
+	@JsonProperty(required=false)
 	private SMSStatusSenderEnum status;
-	@JsonProperty
+	@JsonProperty(required=false)
 	private Date datetime;
 	
 	

@@ -20,6 +20,7 @@ import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsReceiversParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
 import com.milleapplis.ovh.api.sms.param.PUTServiceParam;
+import com.milleapplis.ovh.api.sms.result.SMSAlertThreshold;
 import com.milleapplis.ovh.api.sms.result.SMSTemplateControl;
 import com.milleapplis.ovh.api.sms.result.ReceiversAsynchronousCleanReport;
 import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
@@ -705,7 +706,7 @@ public class SMSService extends AbstractService {
 		String body = null;
 		try {
 			body = mapper.writeValueAsString(templateControl);
-			//System.out.println(body);
+			System.out.println(body);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/templateControl", serviceName), e);
@@ -764,11 +765,11 @@ public class SMSService extends AbstractService {
 	}
 	
 	public SMSUsers getSMSUsers(String serviceName, String login) throws OVHApiException {
-		String url = String.format("sms/%s/users", serviceName);
+		String url = String.format("sms/%s/users/%s", serviceName, login);
 		String result = executeService(Method.GET, url, "");
+		//System.out.println("result : " + result);
 
 		LOG.debug(String.format("%s ==> %s" , url, result));
-		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			TypeReference<SMSUsers> typeRef = new TypeReference<SMSUsers>() {};
@@ -777,6 +778,27 @@ public class SMSService extends AbstractService {
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/users", serviceName), e);
 		}
+	}
+	
+	public void putSMSUsers(String serviceName, String login, SMSUsers smsUsers) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s", serviceName, login);
+		ObjectMapper mapper = new ObjectMapper();
+		String body = null;
+		try {
+			body = mapper.writeValueAsString(smsUsers);
+			//System.out.println(body);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s/users/%s", serviceName, login), e);
+		}
+		
+		executeService(Method.PUT, url, body);
+	}
+
+	public void deleteSMSUsers(String serviceName, String login) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s", serviceName, login);
+		LOG.debug(String.format("%s" , url));
+		executeService(Method.DELETE, url, "");
 	}
 	
 	
