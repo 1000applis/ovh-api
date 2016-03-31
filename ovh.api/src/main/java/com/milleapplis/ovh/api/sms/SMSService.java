@@ -801,5 +801,87 @@ public class SMSService extends AbstractService {
 		executeService(Method.DELETE, url, "");
 	}
 	
+	public String getSMSUsersDocument(String serviceName, String login, Date creationDateFrom, Date creationDateTo, String tag, SMSWayTypeEnum wayType) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/document", serviceName, login);
+		String separator = "?";
+		
+		if (creationDateFrom != null) {
+			url += separator + String.format("creationDatetime.from=%s", creationDateFrom);
+			separator = "&";
+		}
+		if (creationDateTo != null) {
+			url += separator + String.format("creationDatetime.to=%s", creationDateTo);
+			separator = "&";
+		}
+		if (tag != null) {
+			url += separator + String.format("tag=%s", tag);
+			separator = "&";
+		}
+		if (wayType != null) {
+			url += separator + String.format("wayType=%s", wayType);
+		}
+		
+		String result = executeService(Method.GET, url, "");
+		//System.out.println("result : " + result);
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<String> typeRef = new TypeReference<String>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET %s", url), e);
+		}
+	}
+	
+	public List<Long> getSMSUsersIncoming(String serviceName, String login, String sender, String tag) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/incoming", serviceName, login);
+		String separator = "?";
+		
+		if (sender != null) {
+			url += separator + String.format("sender=%s", sender);
+			separator = "&";
+		}
+		if (tag != null) {
+			url += separator + String.format("tag=%s", tag);
+		}
+		
+		String result = executeService(Method.GET, url, "");
+		//System.out.println("result : " + result);
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<List<Long>> typeRef = new TypeReference<List<Long>>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET %s", url), e);
+		}
+	}
+	
+	public SMSIncoming getSMSUsersIncoming(String serviceName, String login, String id) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/incoming/%s", serviceName, login, id);
+		
+		String result = executeService(Method.GET, url, "");
+		//System.out.println("result : " + result);
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<SMSIncoming> typeRef = new TypeReference<SMSIncoming>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service GET %s", url), e);
+		}
+	}
+
+	public void deleteSMSUserIncoming(String serviceName, String login, String id) throws OVHApiException {
+		String url = String.format("sms/%s/user/%s/incoming/%s", serviceName, login, id);
+		LOG.debug(String.format("%s" , url));
+		executeService(Method.DELETE, url, "");
+	}
 	
 }
