@@ -1,10 +1,10 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SMSOutgoing {
+public class Outgoing {
 
 	@JsonProperty
 	private String receiver;

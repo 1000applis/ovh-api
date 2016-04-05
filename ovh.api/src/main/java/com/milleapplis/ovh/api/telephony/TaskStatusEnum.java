@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.sms.enums;
+package com.milleapplis.ovh.api.telephony;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum TelephonyTaskStatusEnum {
+public enum TaskStatusEnum {
 	DOING("doing"),
 	DONE("done"),
 	ERROR("error"),
@@ -11,7 +11,7 @@ public enum TelephonyTaskStatusEnum {
 	
 	private String priority; 
 	
-	private TelephonyTaskStatusEnum(String priority) {
+	private TaskStatusEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -21,11 +21,11 @@ public enum TelephonyTaskStatusEnum {
 	}
 	
 	@JsonValue
-	public TelephonyTaskStatusEnum fromString(String value) {
+	public TaskStatusEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (TelephonyTaskStatusEnum currentPriority : TelephonyTaskStatusEnum.values()) {
+		for (TaskStatusEnum currentPriority : TaskStatusEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

@@ -1,10 +1,10 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SMSBlacklist {
+public class Blacklist {
 
 	@JsonProperty
 	private Date dateCreation;

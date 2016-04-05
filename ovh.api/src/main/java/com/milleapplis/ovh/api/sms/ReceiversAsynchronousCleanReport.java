@@ -1,4 +1,4 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

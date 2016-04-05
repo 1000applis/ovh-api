@@ -1,11 +1,11 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.sms.enums.SMSTodoGeneralPublicFunctionsEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSTodoGeneralPublicStepsEnum;
-import com.milleapplis.ovh.api.sms.enums.TelephonyTaskStatusEnum;
+import com.milleapplis.ovh.api.telephony.TaskStatusEnum;
 
-public class SMSTask {
+public class Task {
 	@JsonProperty
 	private SMSTodoGeneralPublicStepsEnum step;
 	@JsonProperty
@@ -13,7 +13,7 @@ public class SMSTask {
 	@JsonProperty
 	private SMSTodoGeneralPublicFunctionsEnum function;
 	@JsonProperty
-	private TelephonyTaskStatusEnum status;
+	private TaskStatusEnum status;
 
 	public String toString() {
 		return String.format("[Step : %s][Task id : %s][Function : %s][Status : %s]", step, taskId, function, status);
@@ -43,11 +43,11 @@ public class SMSTask {
 		this.function = function;
 	}
 
-	public TelephonyTaskStatusEnum getStatus() {
+	public TaskStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(TelephonyTaskStatusEnum status) {
+	public void setStatus(TaskStatusEnum status) {
 		this.status = status;
 	}
 	

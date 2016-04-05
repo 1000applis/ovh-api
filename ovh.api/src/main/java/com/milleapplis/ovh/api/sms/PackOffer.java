@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SMSPackOffer {
+public class PackOffer {
 
 	@JsonProperty
 	private double smsQuantity;

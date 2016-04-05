@@ -11,31 +11,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milleapplis.ovh.api.core.AbstractService;
 import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
+import com.milleapplis.ovh.api.services.Service;
 import com.milleapplis.ovh.api.sms.enums.ReferenceCountryEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSCountryEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSPackQuantityEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSWayTypeEnum;
-import com.milleapplis.ovh.api.sms.enums.TelephonyTaskStatusEnum;
 import com.milleapplis.ovh.api.sms.param.POSTSmsJobParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsReceiversParam;
 import com.milleapplis.ovh.api.sms.param.POSTSmsSendersParam;
-import com.milleapplis.ovh.api.sms.param.PUTServiceParam;
-import com.milleapplis.ovh.api.sms.result.ReceiversAsynchronousCleanReport;
-import com.milleapplis.ovh.api.sms.result.SMSBlacklist;
-import com.milleapplis.ovh.api.sms.result.SMSHlr;
-import com.milleapplis.ovh.api.sms.result.SMSIncoming;
-import com.milleapplis.ovh.api.sms.result.SMSJob;
-import com.milleapplis.ovh.api.sms.result.SMSOutgoing;
-import com.milleapplis.ovh.api.sms.result.SMSPackOffer;
-import com.milleapplis.ovh.api.sms.result.SMSPttDetails;
-import com.milleapplis.ovh.api.sms.result.SMSReceiver;
-import com.milleapplis.ovh.api.sms.result.SMSSender;
-import com.milleapplis.ovh.api.sms.result.SMSSendingReport;
-import com.milleapplis.ovh.api.sms.result.SMSServiceName;
-import com.milleapplis.ovh.api.sms.result.SMSTask;
-import com.milleapplis.ovh.api.sms.result.SMSTemplateControl;
-import com.milleapplis.ovh.api.sms.result.SMSUsers;
-import com.milleapplis.ovh.api.sms.result.ServicesService;
+import com.milleapplis.ovh.api.telephony.TaskStatusEnum;
 import com.milleapplis.ovh.api.util.Method;
 
 public class SMSService extends AbstractService {
@@ -69,7 +53,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public SMSPttDetails getSMSPtts(String ptt) throws OVHApiException {
+	public PttDetails getSMSPtts(String ptt) throws OVHApiException {
 		String url =String.format("sms/ptts?ptt=%", ptt);
 		String result = executeService(Method.GET, url, "");
 		
@@ -77,7 +61,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSPttDetails.class);
+			return mapper.readValue(result, PttDetails.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/ptts.ptt=%s",ptt), e);
@@ -94,7 +78,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifi�e.
 	 */
-	public SMSServiceName getSMSServiceName(String serviceName) throws OVHApiException {
+	public Account getSMSServiceName(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/", serviceName);
 		String result = executeService(Method.GET, url, "");
 		
@@ -102,13 +86,16 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSServiceName.class);
+			return mapper.readValue(result, Account.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service /sms/%s", serviceName), e);
 		}
 	}
 
+	public void putSMSServiceName(String serviceName, Account account) throws OVHApiException {
+		throw new OVHApiException("Not implemented in java API");
+	}
 	
 	public List<String> getSMSBlacklists(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists", serviceName);
@@ -126,7 +113,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public SMSBlacklist getSMSBlacklistsNumber(String serviceName, String number) throws OVHApiException {
+	public Blacklist getSMSBlacklistsNumber(String serviceName, String number) throws OVHApiException {
 		String url = String.format("sms/%s/blacklists/%s", serviceName, number);
 		String result = executeService(Method.GET, url, "");
 		
@@ -134,7 +121,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSBlacklist.class);
+			return mapper.readValue(result, Blacklist.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/blacklists/%s", serviceName, number), e);
@@ -226,7 +213,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public SMSIncoming getSMSIncoming(String serviceName, String smsId) throws OVHApiException {
+	public Incoming getSMSIncoming(String serviceName, String smsId) throws OVHApiException {
 		String url = String.format("sms/%s/incoming/%s", serviceName, smsId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -234,7 +221,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSIncoming.class);
+			return mapper.readValue(result, Incoming.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/incoming/%s", serviceName, smsId), e);
@@ -272,7 +259,7 @@ public class SMSService extends AbstractService {
 	 * @return ???
 	 * @throws OVHApiException Si une erreur est identifi�e.
 	 */
-	public SMSSendingReport postSMSJobs(String serviceName, POSTSmsJobParam smsJobParam) throws OVHApiException {
+	public SmsSendingReport postSMSJobs(String serviceName, POSTSmsJobParam smsJobParam) throws OVHApiException {
 		String url = String.format("sms/%s/jobs", serviceName);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -284,14 +271,14 @@ public class SMSService extends AbstractService {
 		}
 		try {
 			String result = executeService(Method.POST, url, body);
-			return mapper.readValue(result, SMSSendingReport.class);
+			return mapper.readValue(result, SmsSendingReport.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/jobs", serviceName), e);
 		}
 	}
 
-	public List<SMSJob> getSMSJobs(String serviceName, String id) throws OVHApiException {
+	public List<Job> getSMSJobs(String serviceName, String id) throws OVHApiException {
 		String url = String.format("sms/%s/jobs/%s", serviceName, id);
 		String result = executeService(Method.GET, url, "");
 		
@@ -299,7 +286,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			TypeReference<SMSJob> typeRef = new TypeReference<SMSJob>() {};
+			TypeReference<Job> typeRef = new TypeReference<Job>() {};
 			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
@@ -363,7 +350,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public SMSOutgoing getSMSOutgoing(String serviceName, long smsId) throws OVHApiException {
+	public Outgoing getSMSOutgoing(String serviceName, long smsId) throws OVHApiException {
 		String url = String.format("sms/%s/outgoing/%s", serviceName, smsId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -371,7 +358,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSOutgoing.class);
+			return mapper.readValue(result, Outgoing.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/outgoing/%s", serviceName, smsId), e);
@@ -385,7 +372,7 @@ public class SMSService extends AbstractService {
 	}
 	
 
-	public SMSHlr getSMSOutgoingHlr(String serviceName, long smsId) throws OVHApiException {
+	public Hlr getSMSOutgoingHlr(String serviceName, long smsId) throws OVHApiException {
 		String url = String.format("sms/%s/outgoing/%s/hlr", serviceName, smsId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -393,7 +380,7 @@ public class SMSService extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSHlr.class);
+			return mapper.readValue(result, Hlr.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/outgoing/%s/hlr", serviceName, smsId), e);
@@ -416,7 +403,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public SMSReceiver postSMSReceivers(String serviceName, POSTSmsReceiversParam smsReceiverParam) throws OVHApiException {
+	public Receiver postSMSReceivers(String serviceName, POSTSmsReceiversParam smsReceiverParam) throws OVHApiException {
 		String url = String.format("sms/%s/receivers", serviceName);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -428,14 +415,14 @@ public class SMSService extends AbstractService {
 		}
 		String result = executeService(Method.POST, url, body);
 		try {
-			return mapper.readValue(result, SMSReceiver.class);
+			return mapper.readValue(result, Receiver.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/receivers", serviceName), e);
 		}
 	}
 
-	public SMSReceiver getSMSReceiversSlotId(String serviceName, long slotId) throws OVHApiException {
+	public Receiver getSMSReceiversSlotId(String serviceName, long slotId) throws OVHApiException {
 		String url = String.format("sms/%s/receivers/%s", serviceName, slotId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -443,7 +430,7 @@ public class SMSService extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSReceiver.class);
+			return mapper.readValue(result, Receiver.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("sms/%s/receivers/%s", serviceName, slotId), e);
@@ -486,7 +473,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public List<SMSPackOffer> getSMSSeeOffers(String serviceName, ReferenceCountryEnum countryCurrencyPrice, SMSCountryEnum countryDestination, SMSPackQuantityEnum quantity) throws OVHApiException {
+	public List<PackOffer> getSMSSeeOffers(String serviceName, ReferenceCountryEnum countryCurrencyPrice, SMSCountryEnum countryDestination, SMSPackQuantityEnum quantity) throws OVHApiException {
 		String url = String.format("sms/%s/seeOffers?countryCurrencyPrice=%s&countryDestination=%s&quantity=%s", serviceName, countryCurrencyPrice.toString(), countryDestination.toString(), quantity.toString());
 		String result = executeService(Method.GET, url, "");
 		
@@ -494,7 +481,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			TypeReference<List<SMSPackOffer>> typeRef = new TypeReference<List<SMSPackOffer>>() {};
+			TypeReference<List<PackOffer>> typeRef = new TypeReference<List<PackOffer>>() {};
 			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
@@ -570,7 +557,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifi�e.
 	 */
-	public SMSSender getSMSSender(String serviceName, String sender) throws OVHApiException {
+	public Sender getSMSSender(String serviceName, String sender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		String result = executeService(Method.GET, url, "");
 
@@ -578,7 +565,7 @@ public class SMSService extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSSender.class);
+			return mapper.readValue(result, Sender.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service GET /sms/%s/senders/%s",serviceName, sender), e);
@@ -596,7 +583,7 @@ public class SMSService extends AbstractService {
 	 * 
 	 * @throws OVHApiException Si une erreur est identifi�e.
 	 */
-	public void putSMSSenders(String serviceName, String sender, SMSSender smsSender) throws OVHApiException {
+	public void putSMSSenders(String serviceName, String sender, Sender smsSender) throws OVHApiException {
 		String url = String.format("sms/%s/senders/%s", serviceName, sender);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -642,7 +629,7 @@ public class SMSService extends AbstractService {
 		executeService(Method.POST, url, body);
 	}
 
-	public ServicesService getSMSServiceInfo(String serviceName) throws OVHApiException {
+	public Service getSMSServiceInfo(String serviceName) throws OVHApiException {
 		String url = String.format("sms/%s/serviceInfos", serviceName);
 		String result = executeService(Method.GET, url, "");
 
@@ -651,14 +638,14 @@ public class SMSService extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, ServicesService.class);
+			return mapper.readValue(result, Service.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/serviceInfos", serviceName), e);
 		}
 	}
 	
-	public void putSMSServiceInfos(String serviceName, PUTServiceParam service) throws OVHApiException {
+	public void putSMSServiceInfos(String serviceName, Service service) throws OVHApiException {
 		String url = String.format("sms/%s/serviceInfos", serviceName);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -672,7 +659,7 @@ public class SMSService extends AbstractService {
 		executeService(Method.PUT, url, body);
 	}
 
-	public List<Long> getSMSTask(String serviceName, TelephonyTaskStatusEnum status) throws OVHApiException {
+	public List<Long> getSMSTask(String serviceName, TaskStatusEnum status) throws OVHApiException {
 		String url = String.format("sms/%s/task", serviceName);
 		if (status != null) {
 			url = url + "?status=" + status.toString();
@@ -691,7 +678,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public SMSTask getSMSTask(String serviceName, long taskId) throws OVHApiException {
+	public Task getSMSTask(String serviceName, long taskId) throws OVHApiException {
 		String url = String.format("sms/%s/task/%s", serviceName, taskId);
 		String result = executeService(Method.GET, url, "");
 
@@ -699,7 +686,7 @@ public class SMSService extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSTask.class);
+			return mapper.readValue(result, Task.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Impossible d'appeler le service GET sms/%s/task/%s", serviceName, taskId), e);
@@ -722,7 +709,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public void postSMSTemplatesControl(String serviceName, SMSTemplateControl templateControl) throws OVHApiException {
+	public void postSMSTemplatesControl(String serviceName, TemplateControl templateControl) throws OVHApiException {
 		String url = String.format("sms/%s/templatesControl", serviceName);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -736,7 +723,7 @@ public class SMSService extends AbstractService {
 		executeService(Method.POST, url, body);
 	}
 	
-	public SMSTemplateControl getSMSTemplatesControl(String serviceName, String name) throws OVHApiException {
+	public TemplateControl getSMSTemplatesControl(String serviceName, String name) throws OVHApiException {
 		String url = String.format("sms/%s/templatesControl/%s", serviceName, name);
 		String result = executeService(Method.GET, url, "");
 
@@ -744,7 +731,7 @@ public class SMSService extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			TypeReference<SMSTemplateControl> typeRef = new TypeReference<SMSTemplateControl>() {};
+			TypeReference<TemplateControl> typeRef = new TypeReference<TemplateControl>() {};
 			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
@@ -786,7 +773,7 @@ public class SMSService extends AbstractService {
 		executeService(Method.POST, url, body);
 	}
 	
-	public SMSUsers getSMSUsers(String serviceName, String login) throws OVHApiException {
+	public Users getSMSUsers(String serviceName, String login) throws OVHApiException {
 		String url = String.format("sms/%s/users/%s", serviceName, login);
 		String result = executeService(Method.GET, url, "");
 		//System.out.println("result : " + result);
@@ -794,7 +781,7 @@ public class SMSService extends AbstractService {
 		LOG.debug(String.format("%s ==> %s" , url, result));
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			TypeReference<SMSUsers> typeRef = new TypeReference<SMSUsers>() {};
+			TypeReference<Users> typeRef = new TypeReference<Users>() {};
 			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
@@ -802,7 +789,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public void putSMSUsers(String serviceName, String login, SMSUsers smsUsers) throws OVHApiException {
+	public void putSMSUsers(String serviceName, String login, Users smsUsers) throws OVHApiException {
 		String url = String.format("sms/%s/users/%s", serviceName, login);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -883,7 +870,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public SMSIncoming getSMSUsersIncoming(String serviceName, String login, String id) throws OVHApiException {
+	public Incoming getSMSUsersIncoming(String serviceName, String login, String id) throws OVHApiException {
 		String url = String.format("sms/%s/users/%s/incoming/%s", serviceName, login, id);
 		
 		String result = executeService(Method.GET, url, "");
@@ -892,7 +879,7 @@ public class SMSService extends AbstractService {
 		LOG.debug(String.format("%s ==> %s" , url, result));
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			TypeReference<SMSIncoming> typeRef = new TypeReference<SMSIncoming>() {};
+			TypeReference<Incoming> typeRef = new TypeReference<Incoming>() {};
 			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
@@ -923,7 +910,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public SMSSendingReport postSMSUsersJobs(String serviceName, String login, POSTSmsJobParam smsJobParam) throws OVHApiException {
+	public SmsSendingReport postSMSUsersJobs(String serviceName, String login, POSTSmsJobParam smsJobParam) throws OVHApiException {
 		String url = String.format("sms/%s/users/%s/jobs", serviceName, login);
 		ObjectMapper mapper = new ObjectMapper();
 		String body = null;
@@ -935,7 +922,7 @@ public class SMSService extends AbstractService {
 		}
 		try {
 			String result = executeService(Method.POST, url, body);
-			return mapper.readValue(result, SMSSendingReport.class);
+			return mapper.readValue(result, SmsSendingReport.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/jobs", serviceName, login), e);
@@ -943,7 +930,7 @@ public class SMSService extends AbstractService {
 
 	}
 
-	public List<SMSJob> getSMSUsersJobs(String serviceName, String login, String id) throws OVHApiException {
+	public List<Job> getSMSUsersJobs(String serviceName, String login, String id) throws OVHApiException {
 		String url = String.format("sms/%s/users/%s/jobs/%s", serviceName, login, id);
 		String result = executeService(Method.GET, url, "");
 		
@@ -951,7 +938,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			TypeReference<SMSJob> typeRef = new TypeReference<SMSJob>() {};
+			TypeReference<Job> typeRef = new TypeReference<Job>() {};
 			return mapper.readValue(result, typeRef);
 		}
 		catch (Exception e) {
@@ -1006,7 +993,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 	
-	public SMSOutgoing getSMSUsersOutgoing(String serviceName, String login, long smsId) throws OVHApiException {
+	public Outgoing getSMSUsersOutgoing(String serviceName, String login, long smsId) throws OVHApiException {
 		String url = String.format("sms/%s/users/%s/outgoing/%s", serviceName, login, smsId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -1014,7 +1001,7 @@ public class SMSService extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, SMSOutgoing.class);
+			return mapper.readValue(result, Outgoing.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/outgoing/%s", serviceName, login, smsId), e);
@@ -1026,5 +1013,108 @@ public class SMSService extends AbstractService {
 		LOG.debug(String.format("%s ==> %s" , url));
 		executeService(Method.DELETE, url, "");
 	}
+	
+	public Hlr getSMSUsersOutgoingHlr(String serviceName, String login, long smsId) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/outgoing/%s/hlr", serviceName, login, smsId);
+		String result = executeService(Method.GET, url, "");
+		
+		LOG.debug(String.format("%s ==> %s" , url, result));
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(result, Hlr.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/outgoing/%s/hlr", serviceName, login, smsId), e);
+		}
+	}
+	
+	public List<Long> getSMSUsersReceivers(String serviceName, String login) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/receivers", serviceName, login);
+		String result = executeService(Method.GET, url, "");
+		
+		LOG.debug(String.format("%s ==> %s" , url, result));
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<List<Long>> typeRef = new TypeReference<List<Long>>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/receivers", serviceName, login), e);
+		}
+	}
+	
+	public Receiver postSMSUsersReceivers(String serviceName, String login, POSTSmsReceiversParam smsReceiversParam) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/receivers", serviceName, login);
+		ObjectMapper mapper = new ObjectMapper();
+		String body = null;
+		try {
+			body = mapper.writeValueAsString(smsReceiversParam);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/receivers", serviceName, login), e);
+		}
+		try {
+			String result = executeService(Method.POST, url, body);
+			return mapper.readValue(result, Receiver.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/receivers", serviceName, login), e);
+		}
+
+	}
+
+	public Receiver getSMSUsersReceivers(String serviceName, String login, long slotId) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/receivers/%s", serviceName, login, slotId);
+		String result = executeService(Method.GET, url, "");
+		
+		LOG.debug(String.format("%s ==> %s" , url, result));
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<Receiver> typeRef = new TypeReference<Receiver>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/receivers/%s", serviceName, login, slotId), e);
+		}
+	}
+
+	public void deleteSMSUsersReceivers(String serviceName, String login, long slotId) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/receivers/%s", serviceName, login, slotId);
+		LOG.debug(String.format("%s ==> %s" , url));
+		executeService(Method.DELETE, url, "");
+	}
+
+	public ReceiversAsynchronousCleanReport postSMSUsersReceiversClean(String serviceName, String login, long slotId) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/receivers/%s/clean", serviceName, login, slotId);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String result = executeService(Method.POST, url, "");
+			return mapper.readValue(result, ReceiversAsynchronousCleanReport.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/receivers", serviceName, login), e);
+		}
+
+	}
+
+	public String getSMSUsersReceiversCsv(String serviceName, String login, long slotId) throws OVHApiException {
+		String url = String.format("sms/%s/users/%s/receivers/%s/csv", serviceName, login, slotId);
+		String result = executeService(Method.GET, url, "");
+		
+		LOG.debug(String.format("%s ==> %s" , url, result));
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<String> typeRef = new TypeReference<String>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /sms/%s/users/%s/receivers/%s/csv", serviceName, login, slotId), e);
+		}
+	}
+
 	
 }

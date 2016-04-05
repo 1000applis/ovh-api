@@ -1,4 +1,4 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import com.milleapplis.ovh.api.sms.enums.SMSStatusSenderEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSTypeTemplateEnum;
 
 @JsonInclude(Include.NON_NULL)
-public class SMSTemplateControl {
+public class TemplateControl {
 	@JsonProperty
 	private SMSTypeTemplateEnum activity;
 	@JsonProperty

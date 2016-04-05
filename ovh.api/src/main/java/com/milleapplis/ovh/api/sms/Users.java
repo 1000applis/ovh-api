@@ -1,10 +1,12 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.milleapplis.ovh.api.sms.result.SMSAlertThreshold;
+import com.milleapplis.ovh.api.sms.result.SMSQuota;
 
-public class SMSUsers {
+public class Users {
 
 	@JsonProperty
 	private SMSQuota quotaInformations;

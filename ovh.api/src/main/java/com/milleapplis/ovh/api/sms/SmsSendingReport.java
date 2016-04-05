@@ -1,10 +1,10 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SMSSendingReport {
+public class SmsSendingReport {
 
 	@JsonProperty
 	private double  totalCreditsRemoved;

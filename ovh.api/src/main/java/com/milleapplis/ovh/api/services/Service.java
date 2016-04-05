@@ -1,12 +1,13 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.services;
 
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.sms.enums.ServiceStateEnum;
+import com.milleapplis.ovh.api.sms.result.ServiceRenew;
 
-public class ServicesService {
+public class Service {
 
 	@JsonProperty
 	private ServiceStateEnum status;

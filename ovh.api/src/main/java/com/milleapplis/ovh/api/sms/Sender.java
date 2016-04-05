@@ -1,11 +1,11 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.sms.enums.SMSRefererSenderEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSStatusSenderEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSTypeSenderEnum;
 
-public class SMSSender {
+public class Sender {
 	@JsonProperty
 	private String comment;
 	@JsonProperty
