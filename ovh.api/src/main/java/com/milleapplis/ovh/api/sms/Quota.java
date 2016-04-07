@@ -1,9 +1,9 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.sms.enums.SMSQuotaStatusEnum;
 
-public class SMSQuota {
+public class Quota {
 	@JsonProperty
 	private SMSQuotaStatusEnum quotaStatus;
 	@JsonProperty

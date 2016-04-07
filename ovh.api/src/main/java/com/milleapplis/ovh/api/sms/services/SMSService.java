@@ -1,4 +1,4 @@
-package com.milleapplis.ovh.api.sms;
+package com.milleapplis.ovh.api.sms.services;
 
 import java.util.Date;
 import java.util.List;
@@ -11,8 +11,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milleapplis.ovh.api.core.AbstractService;
 import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
+import com.milleapplis.ovh.api.reference.CountryEnum;
 import com.milleapplis.ovh.api.services.Service;
-import com.milleapplis.ovh.api.sms.enums.ReferenceCountryEnum;
+import com.milleapplis.ovh.api.sms.Account;
+import com.milleapplis.ovh.api.sms.Blacklist;
+import com.milleapplis.ovh.api.sms.Hlr;
+import com.milleapplis.ovh.api.sms.Incoming;
+import com.milleapplis.ovh.api.sms.Job;
+import com.milleapplis.ovh.api.sms.Outgoing;
+import com.milleapplis.ovh.api.sms.PackOffer;
+import com.milleapplis.ovh.api.sms.PttDetails;
+import com.milleapplis.ovh.api.sms.Receiver;
+import com.milleapplis.ovh.api.sms.ReceiversAsynchronousCleanReport;
+import com.milleapplis.ovh.api.sms.Sender;
+import com.milleapplis.ovh.api.sms.SmsSendingReport;
+import com.milleapplis.ovh.api.sms.Task;
+import com.milleapplis.ovh.api.sms.TemplateControl;
+import com.milleapplis.ovh.api.sms.Users;
 import com.milleapplis.ovh.api.sms.enums.SMSCountryEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSPackQuantityEnum;
 import com.milleapplis.ovh.api.sms.enums.SMSWayTypeEnum;
@@ -473,7 +488,7 @@ public class SMSService extends AbstractService {
 		}
 	}
 
-	public List<PackOffer> getSMSSeeOffers(String serviceName, ReferenceCountryEnum countryCurrencyPrice, SMSCountryEnum countryDestination, SMSPackQuantityEnum quantity) throws OVHApiException {
+	public List<PackOffer> getSMSSeeOffers(String serviceName, CountryEnum countryCurrencyPrice, SMSCountryEnum countryDestination, SMSPackQuantityEnum quantity) throws OVHApiException {
 		String url = String.format("sms/%s/seeOffers?countryCurrencyPrice=%s&countryDestination=%s&quantity=%s", serviceName, countryCurrencyPrice.toString(), countryDestination.toString(), quantity.toString());
 		String result = executeService(Method.GET, url, "");
 		

@@ -1,12 +1,10 @@
 package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.milleapplis.ovh.api.sms.result.SMSResponse;
-import com.milleapplis.ovh.api.sms.result.Templates;
 
 public class Account {
 	@JsonProperty
-	private SMSResponse smsResponse;
+	private Response smsResponse;
 	@JsonProperty
 	private String status;
 	@JsonProperty
@@ -30,10 +28,10 @@ public class Account {
 	@JsonProperty
 	private Templates templates;
 	
-	public SMSResponse getSmsResponse() {
+	public Response getSmsResponse() {
 		return smsResponse;
 	}
-	public void setSmsResponse(SMSResponse smsResponse) {
+	public void setSmsResponse(Response smsResponse) {
 		this.smsResponse = smsResponse;
 	}
 	public String getStatus() {

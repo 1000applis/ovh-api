@@ -1,9 +1,9 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.sms;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.sms.enums.SMSSupportEnum;
 
-public class SMSAlertThreshold {
+public class AlertThreshold {
 	@JsonProperty
 	private SMSSupportEnum support;
 	@JsonProperty

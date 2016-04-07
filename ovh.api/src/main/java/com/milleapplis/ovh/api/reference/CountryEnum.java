@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.sms.enums;
+package com.milleapplis.ovh.api.reference;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ReferenceCountryEnum {
+public enum CountryEnum {
 	AL("all"),
 	CA("ca"),
 	CZ("cz"),
@@ -29,7 +29,7 @@ public enum ReferenceCountryEnum {
 	
 	private String priority; 
 	
-	private ReferenceCountryEnum(String priority) {
+	private CountryEnum(String priority) {
 		this.priority = priority;
 	}
 	
@@ -39,11 +39,11 @@ public enum ReferenceCountryEnum {
 	}
 	
 	@JsonValue
-	public ReferenceCountryEnum fromString(String value) {
+	public CountryEnum fromString(String value) {
 		if (value == null) {
 			return null;
 		}
-		for (ReferenceCountryEnum currentPriority : ReferenceCountryEnum.values()) {
+		for (CountryEnum currentPriority : CountryEnum.values()) {
 			if (value.equals(currentPriority.toString())) {
 				return currentPriority;
 			}

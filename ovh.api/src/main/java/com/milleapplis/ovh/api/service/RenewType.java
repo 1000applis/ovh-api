@@ -1,8 +1,8 @@
-package com.milleapplis.ovh.api.sms.result;
+package com.milleapplis.ovh.api.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ServiceRenew {
+public class RenewType {
 
 	@JsonProperty
 	private Long period;

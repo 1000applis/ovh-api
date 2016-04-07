@@ -3,20 +3,18 @@ package com.milleapplis.ovh.api.sms;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.milleapplis.ovh.api.sms.result.SMSAlertThreshold;
-import com.milleapplis.ovh.api.sms.result.SMSQuota;
 
 public class Users {
 
 	@JsonProperty
-	private SMSQuota quotaInformations;
+	private Quota quotaInformations;
 	@JsonProperty
 	private String password;
 	@JsonProperty
 	private String stopCallBack;
 	@JsonProperty
 	private List<String> ipRestrictions;
-	private SMSAlertThreshold alertThresholdInformations;
+	private AlertThreshold alertThresholdInformations;
 	private String login;
 	private String callBack;
 	
@@ -27,12 +25,12 @@ public class Users {
 	}
 
 
-	public SMSQuota getQuotaInformations() {
+	public Quota getQuotaInformations() {
 		return quotaInformations;
 	}
 
 
-	public void setQuotaInformations(SMSQuota quotaInformations) {
+	public void setQuotaInformations(Quota quotaInformations) {
 		this.quotaInformations = quotaInformations;
 	}
 
@@ -67,13 +65,13 @@ public class Users {
 	}
 
 
-	public SMSAlertThreshold getAlertThresholdInformations() {
+	public AlertThreshold getAlertThresholdInformations() {
 		return alertThresholdInformations;
 	}
 
 
 	public void setAlertThresholdInformations(
-			SMSAlertThreshold alertThresholdInformations) {
+			AlertThreshold alertThresholdInformations) {
 		this.alertThresholdInformations = alertThresholdInformations;
 	}
 

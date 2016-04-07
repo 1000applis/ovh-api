@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.milleapplis.ovh.api.service.RenewType;
 import com.milleapplis.ovh.api.sms.enums.ServiceStateEnum;
-import com.milleapplis.ovh.api.sms.result.ServiceRenew;
 
 public class Service {
 
@@ -18,7 +18,7 @@ public class Service {
 	@JsonProperty
 	private String contactBilling;
 	@JsonProperty
-	private ServiceRenew renew;
+	private RenewType renew;
 	@JsonProperty
 	private String domain;
 	@JsonProperty
@@ -71,11 +71,11 @@ public class Service {
 		this.contactBilling = contactBilling;
 	}
 
-	public ServiceRenew getRenew() {
+	public RenewType getRenew() {
 		return renew;
 	}
 
-	public void setRenew(ServiceRenew renew) {
+	public void setRenew(RenewType renew) {
 		this.renew = renew;
 	}
 
