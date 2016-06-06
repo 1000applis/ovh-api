@@ -1,19 +1,20 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.billing;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.milleapplis.ovh.api.order.Price;
 
-public class MEBillDetail {
+public class BillDetail {
 
 	@JsonProperty
-	private MEPrice totalPrice;
+	private Price totalPrice;
 	@JsonProperty
 	private Date periodStart;
 	@JsonProperty
 	private String quantity;
 	@JsonProperty
-	private MEPrice unitPrice;
+	private Price unitPrice;
 	@JsonProperty
 	private String description;
 	@JsonProperty
@@ -27,10 +28,10 @@ public class MEBillDetail {
 		return String.format("[Total price : %s %s][Quantity : %s][Unit price : %s %s]", totalPrice.getValue(), totalPrice.getCurrencyCode().toString(), quantity, unitPrice.getValue(), unitPrice.getCurrencyCode());
 	}
 	
-	public MEPrice getTotalPrice() {
+	public Price getTotalPrice() {
 		return totalPrice;
 	}
-	public void setTotalPrice(MEPrice totalPrice) {
+	public void setTotalPrice(Price totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	public Date getPeriodStart() {
@@ -45,10 +46,10 @@ public class MEBillDetail {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
-	public MEPrice getUnitPrice() {
+	public Price getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(MEPrice unitPrice) {
+	public void setUnitPrice(Price unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 	public String getDescription() {

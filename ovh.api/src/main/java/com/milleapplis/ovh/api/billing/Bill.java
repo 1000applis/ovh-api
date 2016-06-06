@@ -1,19 +1,20 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.billing;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.milleapplis.ovh.api.order.Price;
 
-public class MEBill {
+public class Bill {
 
 	@JsonProperty
 	private String pdfUrl;
 	@JsonProperty
 	private Date date;
 	@JsonProperty
-	private MEPrice priceWithoutTax;
+	private Price priceWithoutTax;
 	@JsonProperty
-	private MEPrice tax;
+	private Price tax;
 	@JsonProperty
 	private String billId;
 	@JsonProperty
@@ -23,7 +24,7 @@ public class MEBill {
 	@JsonProperty
 	private String url;
 	@JsonProperty
-	private MEPrice priceWithTax;
+	private Price priceWithTax;
 	
 	
 	public String getPdfUrl() {
@@ -38,16 +39,16 @@ public class MEBill {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public MEPrice getPriceWithoutTax() {
+	public Price getPriceWithoutTax() {
 		return priceWithoutTax;
 	}
-	public void setPriceWithoutTax(MEPrice priceWithoutTax) {
+	public void setPriceWithoutTax(Price priceWithoutTax) {
 		this.priceWithoutTax = priceWithoutTax;
 	}
-	public MEPrice getTax() {
+	public Price getTax() {
 		return tax;
 	}
-	public void setTax(MEPrice tax) {
+	public void setTax(Price tax) {
 		this.tax = tax;
 	}
 	public String getBillId() {
@@ -74,10 +75,10 @@ public class MEBill {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public MEPrice getPriceWithTax() {
+	public Price getPriceWithTax() {
 		return priceWithTax;
 	}
-	public void setPriceWithTax(MEPrice priceWithTax) {
+	public void setPriceWithTax(Price priceWithTax) {
 		this.priceWithTax = priceWithTax;
 	}
 	

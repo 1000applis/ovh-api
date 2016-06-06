@@ -1,12 +1,13 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.api;
 
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.milleapplis.ovh.api.auth.AccessRules;
 import com.milleapplis.ovh.api.me.enums.MECredentialStateEnum;
 
-public class MECredential {
+public class Credential {
 
 	@JsonProperty
 	private boolean ovhSupport;
@@ -17,7 +18,7 @@ public class MECredential {
 	@JsonProperty
 	private long credentialId;
 	@JsonProperty
-	private List<MEAccessRules> rules;
+	private List<AccessRules> rules;
 	@JsonProperty
 	private Date expiration;
 	@JsonProperty
@@ -54,10 +55,10 @@ public class MECredential {
 	public void setCredentialId(long credentialId) {
 		this.credentialId = credentialId;
 	}
-	public List<MEAccessRules> getRules() {
+	public List<AccessRules> getRules() {
 		return rules;
 	}
-	public void setRules(List<MEAccessRules> rules) {
+	public void setRules(List<AccessRules> rules) {
 		this.rules = rules;
 	}
 	public Date getExpiration() {

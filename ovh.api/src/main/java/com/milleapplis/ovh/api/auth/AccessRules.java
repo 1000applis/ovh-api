@@ -1,9 +1,9 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.me.enums.MEAuthMethodEnum;
 
-public class MEAccessRules {
+public class AccessRules {
 
 	@JsonProperty
 	private MEAuthMethodEnum method;

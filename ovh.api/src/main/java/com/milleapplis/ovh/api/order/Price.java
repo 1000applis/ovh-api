@@ -1,9 +1,9 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.order;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.me.enums.MECurrencyCodeEnum;
 
-public class MEPrice {
+public class Price {
 
 	@JsonProperty
 	private MECurrencyCodeEnum currencyCode;

@@ -1,11 +1,11 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.billing;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.me.enums.MEPaymentMeanEnum;
 
-public class MEPayment {
+public class Payment {
 
 	@JsonProperty
 	private Date paymentDate;

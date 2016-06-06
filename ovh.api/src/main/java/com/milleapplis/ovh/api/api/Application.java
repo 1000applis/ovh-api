@@ -1,9 +1,9 @@
-package com.milleapplis.ovh.api.me.result;
+package com.milleapplis.ovh.api.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.milleapplis.ovh.api.me.enums.MEApplicationStatusEnum;
 
-public class MEApplication {
+public class Application {
 
 	@JsonProperty
 	private MEApplicationStatusEnum status;

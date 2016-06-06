@@ -8,16 +8,17 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.milleapplis.ovh.api.api.Application;
+import com.milleapplis.ovh.api.billing.Bill;
+import com.milleapplis.ovh.api.billing.BillDetail;
+import com.milleapplis.ovh.api.billing.Payment;
 import com.milleapplis.ovh.api.core.AbstractService;
 import com.milleapplis.ovh.api.core.OVHApiException;
 import com.milleapplis.ovh.api.credential.Credential;
 import com.milleapplis.ovh.api.me.enums.MECredentialStateEnum;
-import com.milleapplis.ovh.api.me.result.MEApplication;
-import com.milleapplis.ovh.api.me.result.MEBill;
-import com.milleapplis.ovh.api.me.result.MEBillDetail;
-import com.milleapplis.ovh.api.me.result.MECredential;
-import com.milleapplis.ovh.api.me.result.MEPayment;
 import com.milleapplis.ovh.api.nichandle.Nichandle;
+import com.milleapplis.ovh.api.nichandle.accessrestriction.SOTPAccount;
+import com.milleapplis.ovh.api.nichandle.accessrestriction.SOTPSecret;
 import com.milleapplis.ovh.api.util.Method;
 
 public class MEServices extends AbstractService {
@@ -43,6 +44,49 @@ public class MEServices extends AbstractService {
 		}
 	}
 	
+	public void putME(Nichandle nichandle) throws OVHApiException {
+		String url = String.format("me");
+		ObjectMapper mapper = new ObjectMapper();
+		String body = null;
+		try {
+			body = mapper.writeValueAsString(nichandle);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Impossible d'appeler le service /me"), e);
+		}
+		
+		executeService(Method.PUT, url, body);
+	}
+
+	public SOTPAccount getMEAccessRestrictionBackupCode() throws OVHApiException {
+		String url = String.format("me/accessRestriction/backupCode");
+		String result = executeService(Method.GET, url, "");
+
+		LOG.debug(String.format("%s ==> %s" , url, result));
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			TypeReference<SOTPAccount> typeRef = new TypeReference<SOTPAccount>() {};
+			return mapper.readValue(result, typeRef);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /me/accessRestriction/backupCode"), e);
+		}
+	}
+
+	public SOTPSecret postMEAccessRestrictionBackupCode() throws OVHApiException {
+		String url = String.format("me/accessRestriction/backupCode");
+		ObjectMapper mapper = new ObjectMapper();
+		String result = executeService(Method.POST, url, "");
+		try {
+			return mapper.readValue(result, SOTPSecret.class);
+		}
+		catch (Exception e) {
+			throw new OVHApiException(String.format("Unable to call service /me/accessRestriction/backupCode"), e);
+		}
+	}
+
+	
 	
 	public List<Long> getMEApiApplication() throws OVHApiException {
 		String url = String.format("me/api/application");
@@ -61,7 +105,7 @@ public class MEServices extends AbstractService {
 	}
 
 	
-	public MEApplication getMEApiApplication(long applicationId) throws OVHApiException {
+	public Application getMEApiApplication(long applicationId) throws OVHApiException {
 		String url = String.format("me/api/application/%s", applicationId);
 		String result = executeService(Method.GET, url, "");
 
@@ -69,7 +113,7 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MEApplication.class);
+			return mapper.readValue(result, Application.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("Unable to call service me/api/application/%s", applicationId), e);
@@ -101,7 +145,7 @@ public class MEServices extends AbstractService {
 		}
 	}
 	
-	public MECredential getMEApiCredential(long credentialId) throws OVHApiException {
+	public com.milleapplis.ovh.api.api.Credential getMEApiCredential(long credentialId) throws OVHApiException {
 		String url = String.format("me/api/credential/%s", credentialId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -109,7 +153,7 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MECredential.class);
+			return mapper.readValue(result, com.milleapplis.ovh.api.api.Credential.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/api/credential/%s", credentialId), e);
@@ -122,7 +166,7 @@ public class MEServices extends AbstractService {
 		executeService(Method.DELETE, url, "");
 	}
 	
-	public MEApplication getMEApiCredentialApplication(long credentialId) throws OVHApiException {
+	public Application getMEApiCredentialApplication(long credentialId) throws OVHApiException {
 		String url = String.format("me/api/credential/%s/application", credentialId);
 		String result = executeService(Method.GET, url, "");
 
@@ -130,7 +174,7 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MEApplication.class);
+			return mapper.readValue(result, Application.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/api/credential/%s/application", credentialId), e);
@@ -162,7 +206,7 @@ public class MEServices extends AbstractService {
 		}
 	}
 
-	public MEBill getMEBill(String billId) throws OVHApiException {
+	public Bill getMEBill(String billId) throws OVHApiException {
 		String url = String.format("me/bill/%s", billId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -170,7 +214,7 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MEBill.class);
+			return mapper.readValue(result, Bill.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/bill/%s", billId), e);
@@ -193,7 +237,7 @@ public class MEServices extends AbstractService {
 		}
 	}
 
-	public MEBillDetail getMEBillDetails(String billId, String detailId) throws OVHApiException {
+	public BillDetail getMEBillDetails(String billId, String detailId) throws OVHApiException {
 		String url = String.format("me/bill/%s/details/%s", billId, detailId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -201,14 +245,14 @@ public class MEServices extends AbstractService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MEBillDetail.class);
+			return mapper.readValue(result, BillDetail.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/bill/%s/details/%s", billId, detailId), e);
 		}
 	}
 
-	public MEPayment getMEBillPayment(String billId) throws OVHApiException {
+	public Payment getMEBillPayment(String billId) throws OVHApiException {
 		String url = String.format("me/bill/%s/payment", billId);
 		String result = executeService(Method.GET, url, "");
 		
@@ -216,7 +260,7 @@ public class MEServices extends AbstractService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(result, MEPayment.class);
+			return mapper.readValue(result, Payment.class);
 		}
 		catch (Exception e) {
 			throw new OVHApiException(String.format("me/bill/%s/payment", billId), e);
